@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 
-import 'core/utils/app_colors.dart';
+import 'core/style/app_colors.dart';
 import 'core/utils/app_strings.dart';
-import 'core/utils/style_constant.dart';
+import 'core/style/style_constant.dart';
 import 'features/home/presentation/screens/home_screen.dart';
+import 'features/my_account/presentation/screens/profileScreen.dart';
 /*
 import 'features/profile/presentation/screens/profileScreen.dart';
 import 'features/tickets_history/presentation/screens/tickets_history_screen.dart';*/
@@ -75,8 +76,7 @@ class _SuperJetAppState extends State<SuperJetApp> {
     switch (index) {
       case 0:
         {
-          //return const ProfileScreen();
-          return null;
+          return const MyAccountScreen();
         }
 
       case 1:

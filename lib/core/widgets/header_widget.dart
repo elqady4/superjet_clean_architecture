@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/app_assets_strings.dart';
 
-import '../utils/style_constant.dart';
+import '../style/style_constant.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../../core/utils/end_points.dart';
+import '../../../../api/end_points.dart';
 import '../models/available_trip_model.dart';
 import '../models/trip_search_model.dart';
 

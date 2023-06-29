@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../../core/utils/end_points.dart';
+import '../../../../api/end_points.dart';
 import '../models/city_model.dart';
 
 abstract class HomeRemoteDataSource {

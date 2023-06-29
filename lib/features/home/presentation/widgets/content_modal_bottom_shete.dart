@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/style/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/style_constant.dart';
+import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/center_msg.dart';
 import '../../domain/entities/city_entitie.dart';
 import '../cubits/citu_search_cubit/city_search_cubit.dart';
@@ -35,7 +36,7 @@ class ModalSheteContentWidget extends StatelessWidget {
                 height: 8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    color: StyleConst.primaryColor),
+                    color: AppColors.primaryColor),
               ),
               const SizedBox(
                 height: 15,

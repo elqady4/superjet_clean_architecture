@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/style_constant.dart';
+import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/dotet_line.dart';
 import '../../domain/entities/available_trip_entity.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/style_constant.dart';
+import '../../../../core/style/app_colors.dart';
+import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/dotet_line.dart';
 
 class TripDetailsWidget extends StatelessWidget {
@@ -88,7 +89,7 @@ class TripDetailsWidget extends StatelessWidget {
 
   Color pointColor(int index) {
     if (index == 0) {
-      return StyleConst.primaryColor;
+      return AppColors.primaryColor;
     } else if (index + 1 == detailsList.length) {
       return Colors.red;
     } else {

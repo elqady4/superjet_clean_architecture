@@ -5,7 +5,7 @@ import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 
 import '../../../../core/utils/app_assets_strings.dart';
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/style_constant.dart';
+import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/center_msg.dart';
 import '../../../../core/widgets/m_button.dart';
 import '../../../available_trips/domain/entities/trip_search_entity.dart';
@@ -131,22 +131,26 @@ class HomeScreen extends StatelessWidget {
                             MButton(
                               title: AppStrings.search,
                               onTap: () {
-                                BlocProvider.of<AvailableTripsCubit>(context)
-                                    .getAvailableTrips(TripSearchEntity(
-                                        destinationCity:
-                                            BlocProvider.of<CityTextCubit>(
-                                                    context)
-                                                .cityFrom,
-                                        arrivalCity:
-                                            BlocProvider.of<CityTextCubit>(
-                                                    context)
-                                                .cityTo,
-                                        travelDate:
-                                            BlocProvider.of<CityTextCubit>(
-                                                    context)
-                                                .date));
-                                Navigator.pushNamed(
-                                    context, Routes.availableTripsRoute);
+                                String destinationCity =
+                                    BlocProvider.of<CityTextCubit>(context)
+                                        .cityFrom;
+                                String arrivalCity =
+                                    BlocProvider.of<CityTextCubit>(context)
+                                        .cityTo;
+                                String travelDate =
+                                    BlocProvider.of<CityTextCubit>(context)
+                                        .date;
+                                if (destinationCity.isNotEmpty &&
+                                    arrivalCity.isNotEmpty &&
+                                    travelDate.isNotEmpty) {
+                                  BlocProvider.of<AvailableTripsCubit>(context)
+                                      .getAvailableTrips(TripSearchEntity(
+                                          destinationCity: destinationCity,
+                                          arrivalCity: arrivalCity,
+                                          travelDate: travelDate));
+                                  Navigator.pushNamed(
+                                      context, Routes.availableTripsRoute);
+                                }
                               },
                             )
                           ],

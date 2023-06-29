@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/style_constant.dart';
+import '../../../../core/style/app_colors.dart';
+import '../../../../core/style/style_constant.dart';
 
 class TripDestinationWidget extends StatelessWidget {
   const TripDestinationWidget({
@@ -16,7 +17,7 @@ class TripDestinationWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: StyleConst.backColor,
+        color: AppColors.backColor,
       ),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 
-import '../../../../core/utils/style_constant.dart';
+import '../../../../core/style/style_constant.dart';
 
 class DirectionBaseWidget extends StatelessWidget {
   const DirectionBaseWidget({
@@ -24,12 +25,12 @@ class DirectionBaseWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          color: StyleConst.backColor,
+          color: AppColors.backColor,
           child: Row(
             children: [
               Icon(
                 icon,
-                color: Colors.lightBlue,
+                color: AppColors.iconsColor,
                 size: 45,
               ),
               const SizedBox(
