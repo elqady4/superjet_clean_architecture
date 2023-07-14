@@ -5,10 +5,10 @@ import 'package:suberjet_clean_architecture/api/payment_endpoints.dart';
 import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 
-import '../cubit/card_payment_cubit/cubit/card_payment_cubit.dart';
+import '../cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
 
-class PaymentWebViewScreen extends StatelessWidget {
-  const PaymentWebViewScreen({super.key});
+class PaymentCardWebViewScreen extends StatelessWidget {
+  const PaymentCardWebViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

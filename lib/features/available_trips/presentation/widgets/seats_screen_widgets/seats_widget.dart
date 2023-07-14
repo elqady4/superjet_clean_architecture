@@ -5,7 +5,7 @@ import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/entities/payment_info_entity.dart';
-import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/payment_method_cubit/payment_method_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
 
 import '../../../../../core/style/style_constant.dart';
 import '../../../../../core/widgets/dotet_line.dart';
@@ -432,8 +432,8 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  //Navigator.of(context).pop();
-                                  Navigator.pushNamed(
+                                  Navigator.of(context).pop();
+                                  Navigator.pushReplacementNamed(
                                       context, Routes.choosePaymentMethodRoute);
                                   PaymentInfoEntity paymentInfoEntity =
                                       PaymentInfoEntity(

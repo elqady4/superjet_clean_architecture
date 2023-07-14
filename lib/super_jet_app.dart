@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/presentation/screens/ticket_history_screen.dart';
 
 import 'core/style/app_colors.dart';
 import 'core/utils/app_strings.dart';
@@ -86,8 +87,7 @@ class _SuperJetAppState extends State<SuperJetApp> {
 
       case 2:
         {
-          //return const TicketsHistoryScreen();
-          return null;
+          return const TicketHistoryScreen();
         }
       default:
         {

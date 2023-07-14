@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
-import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/card_payment_cubit/cubit/card_payment_cubit.dart';
-import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/payment_method_cubit/payment_method_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
 import 'features/available_trips/presentation/cubites/available_trips/available_trips_cubit.dart';
 import 'features/home/presentation/cubits/citu_search_cubit/city_search_cubit.dart';
 import 'features/home/presentation/cubits/city_text_cubit/city_text_cubit.dart';
@@ -13,6 +13,7 @@ import 'package:superjet/api/tripsService.dart';
 import 'package:superjet/cubits/AvailableSeats_cubit/available_seats_cubit.dart';
 import 'package:superjet/cubits/StopLocations_cubit/stop_locations_cubit.dart';
 import 'package:superjet/cubits/Tripscubit/trips_cubit.dart';*/
+import 'features/payment/presentation/cubites/wallet_payment_cubit/cubit/wallet_payment_cubit.dart';
 import 'super_jet_app.dart';
 import 'bloc_observer.dart';
 import 'features/home/presentation/cubits/retrive_cities_cubit/home_cubit.dart';
@@ -44,6 +45,9 @@ void main() async {
       ),
       BlocProvider(
         create: (context) => di.sl<CardPaymentCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => di.sl<WalletPaymentCubit>(),
       ),
       /*
       BlocProvider(

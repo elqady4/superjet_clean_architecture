@@ -36,6 +36,7 @@ class AppStrings {
   static const String seatsWillReserved = 'Seats Will Reserved';
   static const String total = 'Total';
   static const String ticket = 'Ticket';
+  static const String ticketsHistory = 'Tickets History';
   static const String everyticket = '/Ticket';
   static const String egPound = 'EGP';
 

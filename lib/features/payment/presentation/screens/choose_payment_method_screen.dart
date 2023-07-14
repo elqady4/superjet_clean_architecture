@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
-import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/card_payment_cubit/cubit/card_payment_cubit.dart';
-import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/payment_method_cubit/payment_method_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/wallet_payment_cubit/cubit/wallet_payment_cubit.dart';
 
 class ChoosePaymentMethodScreen extends StatelessWidget {
   const ChoosePaymentMethodScreen({super.key});
@@ -38,8 +39,8 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  //BlocProvider.of<HomeCubit>(context).getPaymentKeyCard();
-                  Navigator.pushNamed(context, Routes.paymentWebviewRoute);
+                  Navigator.pushReplacementNamed(
+                      context, Routes.paymentCardWebviewRoute);
                   BlocProvider.of<CardPaymentCubit>(context)
                       .getPaymentKeyCard(state.paymentInfoEntity);
                 },
@@ -69,7 +70,10 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  //BlocProvider.of<HomeCubit>(context).getPaymentKeyWallet();
+                  Navigator.pushReplacementNamed(
+                      context, Routes.paymentWalletWebviewRoute);
+                  BlocProvider.of<WalletPaymentCubit>(context)
+                      .getPaymentKeyWallet(state.paymentInfoEntity);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
