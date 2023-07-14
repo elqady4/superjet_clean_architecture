@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 
 import '../../../../core/widgets/header_widget.dart';
-import '../widgets/profileNavWidget.dart';
+import '../widgets/profile_nav_widget.dart';
 
 class MyAccountScreen extends StatelessWidget {
   const MyAccountScreen({super.key});

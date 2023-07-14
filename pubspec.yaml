@@ -35,6 +35,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/home/
+    - assets/seats/
   #   - images/a_dot_ham.jpeg
 
   fonts:

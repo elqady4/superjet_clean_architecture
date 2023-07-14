@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suberjet_clean_architecture/core/errors/failure.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/domain/entities/available_trip_entity.dart';
 
-import '../../../../core/errors/failure.dart';
-import '../../../../core/utils/app_strings.dart';
-import '../../domain/entities/available_trip_entity.dart';
-import '../../domain/entities/trip_search_entity.dart';
-import '../../domain/usecases/get_available_trips_usecase.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../../domain/entities/trip_search_entity.dart';
+import '../../../domain/usecases/get_available_trips_usecase.dart';
 
 part 'available_trips_state.dart';
 

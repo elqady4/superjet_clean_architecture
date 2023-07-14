@@ -1,11 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/data/datasources/available_seats_remote.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/data/repositories/available_seats_repository_impl.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/domain/usecases/get_available_seats_usecase.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
 import 'core/network/netwok_info.dart';
 import 'features/available_trips/data/datasources/available_trips_remote_data_source.dart';
 import 'features/available_trips/data/repositories/available_trip_repository_impl.dart';
+import 'features/available_trips/domain/repositories/available_seats_repository.dart';
 import 'features/available_trips/domain/repositories/available_trip_repository.dart';
 import 'features/available_trips/domain/usecases/get_available_trips_usecase.dart';
-import 'features/available_trips/presentation/cubit/available_trips_cubit.dart';
+import 'features/available_trips/presentation/cubites/available_trips/available_trips_cubit.dart';
 import 'features/home/data/datasources/home_remote_data_source.dart';
 import 'features/home/data/repositories/home_repository_impl.dart';
 import 'features/home/domain/repositories/home_repository.dart';
@@ -25,11 +30,15 @@ Future<void> init() async {
   sl.registerFactory<CitySearchCubit>(() => CitySearchCubit());
   sl.registerFactory<AvailableTripsCubit>(
       () => AvailableTripsCubit(getAvailableTripsUsecas: sl()));
+  sl.registerFactory<AvailableSeatsCubit>(
+      () => AvailableSeatsCubit(getAvailableSeatsUsecase: sl()));
 
   //-- Use Cases
   sl.registerLazySingleton<GetCitiesUsecase>(() => GetCitiesUsecase(sl()));
   sl.registerLazySingleton<GetAvailableTripsUsecas>(
       () => GetAvailableTripsUsecas(availableTripsRepository: sl()));
+  sl.registerLazySingleton<GetAvailableSeatsUsecase>(
+      () => GetAvailableSeatsUsecase(availableSeatsRepository: sl()));
 
   //-- Repositories
   sl.registerLazySingleton<HomeRepository>(
@@ -37,12 +46,17 @@ Future<void> init() async {
   sl.registerLazySingleton<AvailableTripsRepository>(() =>
       AvailableTripsRepositoryImpl(
           networkInfo: sl(), availableTripsRemoteDataSource: sl()));
+  sl.registerLazySingleton<AvailableSeatsRepository>(() =>
+      AvailableSeatsRepositoryImpl(
+          availableSeatsRemoteDataSource: sl(), networkInfo: sl()));
 
   //-- Data Sources
   sl.registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceDIO());
   sl.registerLazySingleton<AvailableTripsRemoteDataSource>(
       () => AvailableTripsRemoteDataSourceDIO());
+  sl.registerLazySingleton<AvailableSeatsRemoteDataSource>(
+      () => AvailableSeatsRemoteDataSourceDIO());
 
   //--Core
   sl.registerLazySingleton<NetworkInfo>(

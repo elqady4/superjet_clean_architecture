@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/widgets/center_msg.dart';
 import '../../../../core/widgets/page_back_widget.dart';
-import '../cubit/available_trips_cubit.dart';
+import '../cubites/available_trips/available_trips_cubit.dart';
 import '../widgets/trip_card.dart';
 
 class AvailableTripsScreen extends StatelessWidget {
@@ -32,7 +34,10 @@ class AvailableTripsScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
-                              // Navigator.pushNamed(context, TakeSeatScreen.id,arguments: tripsList[index]);
+                              Navigator.pushNamed(
+                                  context, Routes.takeSeatRoute);
+                              BlocProvider.of<AvailableSeatsCubit>(context)
+                                  .getAvailableSeats(index);
                             },
                             child: TripCard(
                                 tripEntity: state.availableTripsList[index]),

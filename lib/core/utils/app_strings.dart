@@ -21,4 +21,16 @@ class AppStrings {
   static const String reload = 'There is Problem Reload';
   static const String notFound = 'Not Found ';
   static const String noRouteFound = 'No Route Found';
+  static const String tripDetails = 'Trip Details';
+  static const String yourChoise = 'Your Choise';
+  static const String notAvailable = 'Not Available';
+  static const String available = 'Available';
+  static const String ok = 'Ok';
+  static const String getNow = 'Get it Now';
+  static const String takeSeat = 'Take Seat';
+  static const String seatsWillReserved = 'Seats Will Reserved';
+  static const String total = 'Total';
+  static const String ticket = 'Ticket';
+  static const String everyticket = '/Ticket';
+  static const String egPound = 'EGP';
 }

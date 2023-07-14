@@ -6,7 +6,7 @@ import 'core/style/app_colors.dart';
 import 'core/utils/app_strings.dart';
 import 'core/style/style_constant.dart';
 import 'features/home/presentation/screens/home_screen.dart';
-import 'features/my_account/presentation/screens/profileScreen.dart';
+import 'features/my_account/presentation/screens/profile_screen.dart';
 /*
 import 'features/profile/presentation/screens/profileScreen.dart';
 import 'features/tickets_history/presentation/screens/tickets_history_screen.dart';*/

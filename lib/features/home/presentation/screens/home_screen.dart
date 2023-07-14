@@ -9,7 +9,7 @@ import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/center_msg.dart';
 import '../../../../core/widgets/m_button.dart';
 import '../../../available_trips/domain/entities/trip_search_entity.dart';
-import '../../../available_trips/presentation/cubit/available_trips_cubit.dart';
+import '../../../available_trips/presentation/cubites/available_trips/available_trips_cubit.dart';
 import '../../domain/entities/city_entitie.dart';
 import '../cubits/citu_search_cubit/city_search_cubit.dart';
 import '../cubits/city_text_cubit/city_text_cubit.dart';
