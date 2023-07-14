@@ -4,6 +4,17 @@ import 'package:suberjet_clean_architecture/features/available_trips/data/dataso
 import 'package:suberjet_clean_architecture/features/available_trips/data/repositories/available_seats_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/domain/usecases/get_available_seats_usecase.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_first_token_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_order_id_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_payment_key_card_remote_data_source.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_payment_key_wallet_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_wallet_url_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/repositories/payment_repository_impl.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/repositories/payment_repository.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_first_token_usecase.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_order_id_usecase.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_payment_key_card_usecase.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/card_payment_cubit/cubit/card_payment_cubit.dart';
 import 'core/network/netwok_info.dart';
 import 'features/available_trips/data/datasources/available_trips_remote_data_source.dart';
 import 'features/available_trips/data/repositories/available_trip_repository_impl.dart';
@@ -19,6 +30,7 @@ import 'features/home/presentation/cubits/citu_search_cubit/city_search_cubit.da
 import 'features/home/presentation/cubits/city_text_cubit/city_text_cubit.dart';
 
 import 'features/home/presentation/cubits/retrive_cities_cubit/home_cubit.dart';
+import 'features/payment/presentation/cubit/payment_method_cubit/payment_method_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -32,6 +44,10 @@ Future<void> init() async {
       () => AvailableTripsCubit(getAvailableTripsUsecas: sl()));
   sl.registerFactory<AvailableSeatsCubit>(
       () => AvailableSeatsCubit(getAvailableSeatsUsecase: sl()));
+  sl.registerFactory<PaymentMethodCubit>(() =>
+      PaymentMethodCubit(getFirstTokenUsecase: sl(), getOrderIdUsecase: sl()));
+  sl.registerFactory<CardPaymentCubit>(
+      () => CardPaymentCubit(getPaymentKeyCardUsecase: sl()));
 
   //-- Use Cases
   sl.registerLazySingleton<GetCitiesUsecase>(() => GetCitiesUsecase(sl()));
@@ -39,6 +55,12 @@ Future<void> init() async {
       () => GetAvailableTripsUsecas(availableTripsRepository: sl()));
   sl.registerLazySingleton<GetAvailableSeatsUsecase>(
       () => GetAvailableSeatsUsecase(availableSeatsRepository: sl()));
+  sl.registerLazySingleton<GetFirstTokenUsecase>(
+      () => GetFirstTokenUsecase(paymentRepository: sl()));
+  sl.registerLazySingleton<GetOrderIdUsecase>(
+      () => GetOrderIdUsecase(paymentRepository: sl()));
+  sl.registerLazySingleton<GetPaymentKeyCardUsecase>(
+      () => GetPaymentKeyCardUsecase(paymentRepository: sl()));
 
   //-- Repositories
   sl.registerLazySingleton<HomeRepository>(
@@ -49,6 +71,13 @@ Future<void> init() async {
   sl.registerLazySingleton<AvailableSeatsRepository>(() =>
       AvailableSeatsRepositoryImpl(
           availableSeatsRemoteDataSource: sl(), networkInfo: sl()));
+  sl.registerLazySingleton<PaymentRepository>(() => PaymentRepositoryImpl(
+      getFirstTokenRemoteDataSource: sl(),
+      getOrderIdRemoteDataSource: sl(),
+      getPaymentKeyCardRemoteDataSource: sl(),
+      getPaymentKeyWalletRemoteDataSource: sl(),
+      getWalletUrlRemoteDataSource: sl(),
+      networkInfo: sl()));
 
   //-- Data Sources
   sl.registerLazySingleton<HomeRemoteDataSource>(
@@ -57,6 +86,16 @@ Future<void> init() async {
       () => AvailableTripsRemoteDataSourceDIO());
   sl.registerLazySingleton<AvailableSeatsRemoteDataSource>(
       () => AvailableSeatsRemoteDataSourceDIO());
+  sl.registerLazySingleton<GetFirstTokenRemoteDataSource>(
+      () => GetFirstTokenRemoteDataSourceDIO());
+  sl.registerLazySingleton<GetOrderIdRemoteDataSource>(
+      () => GetOrderIdRemoteDataSourceDIO());
+  sl.registerLazySingleton<GetPaymentKeyCardRemoteDataSource>(
+      () => GetPaymentKeyCardRemoteDataSourceDIO());
+  sl.registerLazySingleton<GetPaymentKeyWalletRemoteDataSource>(
+      () => GetPaymentKeyWalletRemoteDataSourceDIO());
+  sl.registerLazySingleton<GetWalletUrlRemoteDataSource>(
+      () => GetWalletUrlRemoteDataSourceDIO());
 
   //--Core
   sl.registerLazySingleton<NetworkInfo>(

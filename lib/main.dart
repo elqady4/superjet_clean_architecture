@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/card_payment_cubit/cubit/card_payment_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/payment_method_cubit/payment_method_cubit.dart';
 import 'features/available_trips/presentation/cubites/available_trips/available_trips_cubit.dart';
 import 'features/home/presentation/cubits/citu_search_cubit/city_search_cubit.dart';
 import 'features/home/presentation/cubits/city_text_cubit/city_text_cubit.dart';
@@ -36,6 +38,12 @@ void main() async {
       ),
       BlocProvider(
         create: (context) => di.sl<AvailableSeatsCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => di.sl<PaymentMethodCubit>(),
+      ),
+      BlocProvider(
+        create: (context) => di.sl<CardPaymentCubit>(),
       ),
       /*
       BlocProvider(

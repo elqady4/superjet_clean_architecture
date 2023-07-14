@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/entities/payment_info_entity.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubit/payment_method_cubit/payment_method_cubit.dart';
 
 import '../../../../../core/style/style_constant.dart';
 import '../../../../../core/widgets/dotet_line.dart';
@@ -428,7 +432,18 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  //Navigator.of(context).pop();
+                                  Navigator.pushNamed(
+                                      context, Routes.choosePaymentMethodRoute);
+                                  PaymentInfoEntity paymentInfoEntity =
+                                      PaymentInfoEntity(
+                                          amountCents: totalTicketPrice * 100,
+                                          email: AppStrings.tempEmail,
+                                          firstName: AppStrings.tempFname,
+                                          lastName: AppStrings.tempLname,
+                                          phoneNumber: AppStrings.tempPhone);
+                                  BlocProvider.of<PaymentMethodCubit>(context)
+                                      .getFirstToken(paymentInfoEntity);
                                 },
                                 child: Text(
                                   AppStrings.ok,

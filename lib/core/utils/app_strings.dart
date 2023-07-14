@@ -15,6 +15,11 @@ class AppStrings {
   static const String search = 'Search';
   static const String mFrom = 'From';
   static const String mTo = 'To';
+  static const String paymetTitle = 'Payment';
+  static const String firstStepPaymetFail = 'First Step Paymet Fail';
+  static const String secondStepPaymetFail = 'Second Step Paymet Fail';
+  static const String thirdStepPaymetFail = 'Third Step Paymet Fail';
+  static const String fourthStepPaymetFail = 'Fourth Step Paymet Fail';
   static const String serverFailure = 'Server Failure';
   static const String cacheFailure = 'Cache Failure';
   static const String unexpectedError = 'Unexpected Error';
@@ -33,4 +38,10 @@ class AppStrings {
   static const String ticket = 'Ticket';
   static const String everyticket = '/Ticket';
   static const String egPound = 'EGP';
+
+  //temp User Details While Remove When add Auth Feature
+  static const String tempEmail = 'email@gmail.com';
+  static const String tempFname = 'Ehab test';
+  static const String tempLname = 'ElQady test';
+  static const String tempPhone = '01000000055';
 }

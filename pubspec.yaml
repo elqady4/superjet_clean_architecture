@@ -23,6 +23,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0-pre
   molten_navigationbar_flutter: ^1.0.1
   flutter_svg: ^0.23.0
+  flutter_inappwebview: ^5.7.2+3
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -36,6 +37,7 @@ flutter:
   assets:
     - assets/home/
     - assets/seats/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   fonts:
