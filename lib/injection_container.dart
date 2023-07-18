@@ -1,5 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:suberjet_clean_architecture/features/auth/data/datasources/firebase_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/auth/data/repositories/firebase_repository_impl.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/repositories/firebase_repository.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/get_create_current_user_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/get_current_user_id_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/is_sign_in_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_in_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_out_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/data/datasources/available_seats_remote.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/data/repositories/available_seats_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/domain/usecases/get_available_seats_usecase.dart';
@@ -18,6 +29,8 @@ import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_wallet_url_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
 import 'core/network/netwok_info.dart';
+import 'features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
+import 'features/auth/presentation/cubit/user_cubit/user_cubit.dart';
 import 'features/available_trips/data/datasources/available_trips_remote_data_source.dart';
 import 'features/available_trips/data/repositories/available_trip_repository_impl.dart';
 import 'features/available_trips/domain/repositories/available_seats_repository.dart';
@@ -53,6 +66,14 @@ Future<void> init() async {
       () => CardPaymentCubit(getPaymentKeyCardUsecase: sl()));
   sl.registerFactory<WalletPaymentCubit>(() => WalletPaymentCubit(
       getPaymentKeyWalletUsecase: sl(), getWalletUrlUsecase: sl()));
+  sl.registerFactory<UserCubit>(() => UserCubit(
+      getCreateCurrentUserUsecase: sl(),
+      signInUsecase: sl(),
+      signUpUsecase: sl()));
+  sl.registerFactory<AuthCubit>(() => AuthCubit(
+      getCurrentUserIdUsecase: sl(),
+      isSignInUsecase: sl(),
+      signOutUsecase: sl()));
 
   //-- Use Cases
   sl.registerLazySingleton<GetCitiesUsecase>(() => GetCitiesUsecase(sl()));
@@ -70,6 +91,18 @@ Future<void> init() async {
       () => GetPaymentKeyWalletUsecase(paymentRepository: sl()));
   sl.registerLazySingleton<GetWalletUrlUsecase>(
       () => GetWalletUrlUsecase(paymentRepository: sl()));
+  sl.registerLazySingleton<GetCreateCurrentUserUsecase>(
+      () => GetCreateCurrentUserUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<SignInUsecase>(
+      () => SignInUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<SignUpUsecase>(
+      () => SignUpUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<IsSignInUsecase>(
+      () => IsSignInUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<SignOutUsecase>(
+      () => SignOutUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<GetCurrentUserIdUsecase>(
+      () => GetCurrentUserIdUsecase(firebaseRepository: sl()));
 
   //-- Repositories
   sl.registerLazySingleton<HomeRepository>(
@@ -87,6 +120,8 @@ Future<void> init() async {
       getPaymentKeyWalletRemoteDataSource: sl(),
       getWalletUrlRemoteDataSource: sl(),
       networkInfo: sl()));
+  sl.registerLazySingleton<FirebaseRepository>(() => FirebaseRepositoryImpl(
+      firebaseRemoteDataSource: sl(), networkInfo: sl()));
 
   //-- Data Sources
   sl.registerLazySingleton<HomeRemoteDataSource>(
@@ -105,6 +140,8 @@ Future<void> init() async {
       () => GetPaymentKeyWalletRemoteDataSourceDIO());
   sl.registerLazySingleton<GetWalletUrlRemoteDataSource>(
       () => GetWalletUrlRemoteDataSourceDIO());
+  sl.registerLazySingleton<FirebaseRemoteDataSource>(
+      () => FirebaseRemoteDataSourceImpl(auth: sl(), firestore: sl()));
 
   //--Core
   sl.registerLazySingleton<NetworkInfo>(
@@ -112,4 +149,10 @@ Future<void> init() async {
 
   //--External
   sl.registerLazySingleton(() => InternetConnectionChecker());
+
+  final auth = FirebaseAuth.instance;
+  final fireStore = FirebaseFirestore.instance;
+
+  sl.registerLazySingleton(() => auth);
+  sl.registerLazySingleton(() => fireStore);
 }

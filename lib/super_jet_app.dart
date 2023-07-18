@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/features/splash/presentation/screens/splash_screen.dart';
 import 'package:suberjet_clean_architecture/features/ticket_history/presentation/screens/ticket_history_screen.dart';
 
 import 'core/style/app_colors.dart';
@@ -21,7 +24,28 @@ class SuperJetApp extends StatefulWidget {
 }
 
 class _SuperJetAppState extends State<SuperJetApp> {
+  late Timer _timer;
+  bool isSplashAppear = true;
   int _selectedIndex = 1;
+
+  _startDelay() {
+    _timer = Timer(const Duration(milliseconds: 2000), () {
+      isSplashAppear = false;
+      _timer.cancel();
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startDelay();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +58,28 @@ class _SuperJetAppState extends State<SuperJetApp> {
         ),
       ),
       home: SafeArea(
-        child: Scaffold(
-          body: selectPage(_selectedIndex),
-          bottomNavigationBar: MoltenBottomNavigationBar(
-            selectedIndex: _selectedIndex,
-            domeHeight: 25,
-            onTabChange: (clickedIndex) {
-              setState(() {
-                _selectedIndex = clickedIndex;
-              });
-            },
-            tabs: [
-              moltenTabWidget(AppStrings.myAccount, Icons.person),
-              moltenTabWidget(AppStrings.mainPage, Icons.search),
-              moltenTabWidget(AppStrings.tickets, Icons.list_alt),
-            ],
-            barColor: AppColors.barColor,
-          ),
-        ),
+        child: isSplashAppear ? SplashScreen() : _buildTabsScreen(),
+      ),
+    );
+  }
+
+  Scaffold _buildTabsScreen() {
+    return Scaffold(
+      body: selectPage(_selectedIndex),
+      bottomNavigationBar: MoltenBottomNavigationBar(
+        selectedIndex: _selectedIndex,
+        domeHeight: 25,
+        onTabChange: (clickedIndex) {
+          setState(() {
+            _selectedIndex = clickedIndex;
+          });
+        },
+        tabs: [
+          moltenTabWidget(AppStrings.myAccount, Icons.person),
+          moltenTabWidget(AppStrings.mainPage, Icons.search),
+          moltenTabWidget(AppStrings.tickets, Icons.list_alt),
+        ],
+        barColor: AppColors.barColor,
       ),
     );
   }
