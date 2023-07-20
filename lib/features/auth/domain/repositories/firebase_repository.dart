@@ -9,4 +9,5 @@ abstract class FirebaseRepository {
   Future<Either<Failure, Unit>> getCreateCurrentUser(UserEntity userEntity);
   Future<Either<Failure, Unit>> signOut();
   Future<Either<Failure, String>> getCurrentUId();
+  Future<Either<Failure, UserEntity>> getCurrentUser();
 }

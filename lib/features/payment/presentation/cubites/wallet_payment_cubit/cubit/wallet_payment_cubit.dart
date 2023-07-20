@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_payment_key_wallet_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_wallet_url_usecase.dart';
 
@@ -18,20 +19,23 @@ class WalletPaymentCubit extends Cubit<WalletPaymentState> {
       required this.getWalletUrlUsecase})
       : super(WalletPaymentInitial());
 
-  void getPaymentKeyWallet(PaymentInfoEntity params) async {
+  void getPaymentKeyWallet(
+      PaymentInfoEntity params, BuildContext context) async {
     emit(WalletPaymentLoading());
     Either<Failure, String> result = await getPaymentKeyWalletUsecase(params);
     result.fold(
-        (failure) => emit(
-            const WalletPaymentFailure(msg: AppStrings.thirdStepPaymetFail)),
-        (walletKey) => getWalletUrl(walletKey));
+        (failure) => emit(WalletPaymentFailure(
+            msg: AppLocalizations.of(context)!
+                .translate('thirdStepPaymetFail')!)),
+        (walletKey) => getWalletUrl(walletKey, context));
   }
 
-  void getWalletUrl(String walletKey) async {
+  void getWalletUrl(String walletKey, BuildContext context) async {
     Either<Failure, String> result = await getWalletUrlUsecase.call(walletKey);
     result.fold(
-        (failure) => emit(
-            const WalletPaymentFailure(msg: AppStrings.fourthStepPaymetFail)),
+        (failure) => emit(WalletPaymentFailure(
+            msg: AppLocalizations.of(context)!
+                .translate('fourthStepPaymetFail')!)),
         (walletUrl) => emit(WalletPaymentLoaded(paymentWalletUrl: walletUrl)));
   }
 }

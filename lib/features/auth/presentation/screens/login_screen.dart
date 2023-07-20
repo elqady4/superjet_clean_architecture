@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
@@ -16,8 +16,8 @@ import '../../../../core/utils/app_strings.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final _formKey = GlobalKey<FormState>();
-  TextEditingController? emailController = TextEditingController();
-  TextEditingController? passwordController = TextEditingController();
+  final TextEditingController? emailController = TextEditingController();
+  final TextEditingController? passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
             BlocListener<UserCubit, UserState>(
               listener: (context, state) {
                 if (state is UserSuccess) {
-                  BlocProvider.of<AuthCubit>(context).loggedIn();
+                  BlocProvider.of<AuthCubit>(context).loggedIn(context);
                   Navigator.pop(context);
                 } else if (state is UserFailure) {
                   CustomSnackBar.show(
@@ -62,17 +62,9 @@ class LoginScreen extends StatelessWidget {
           ],
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const PageBackHeaderWidget(
-                      pageTitle: AppStrings.loginAccount),
-                  Image.asset(
-                    'assets/home/SA.png',
-                    width: 150,
-                  ),
-                ],
-              ),
+              PageBackHeaderWidget(
+                  pageTitle:
+                      AppLocalizations.of(context)!.translate('loginAccount')!),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -90,7 +82,8 @@ class LoginScreen extends StatelessWidget {
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8)),
                                     fillColor: AppColors.backColor,
-                                    label: const Text(AppStrings.mEmail))),
+                                    label: Text(AppLocalizations.of(context)!
+                                        .translate('mEmail')!))),
                             const SizedBox(
                               height: 8,
                             ),
@@ -101,7 +94,8 @@ class LoginScreen extends StatelessWidget {
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8)),
                                     fillColor: AppColors.backColor,
-                                    label: const Text(AppStrings.mPassword),
+                                    label: Text(AppLocalizations.of(context)!
+                                        .translate('mPassword')!),
                                     suffixIcon:
                                         const Icon(Icons.remove_red_eye))),
                             const SizedBox(
@@ -115,17 +109,20 @@ class LoginScreen extends StatelessWidget {
                               context, Routes.registerRoute),
                           child: CenterHintMsg(
                               color: AppColors.green,
-                              msg: AppStrings.registerNow)),
+                              msg: AppLocalizations.of(context)!
+                                  .translate('registerNow')!)),
                       MButton(
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               BlocProvider.of<UserCubit>(context).submitSignIn(
                                   userEntity: UserEntity(
                                       email: emailController!.text,
-                                      password: passwordController!.text));
+                                      password: passwordController!.text),
+                                  context: context);
                             }
                           },
-                          title: AppStrings.login),
+                          title: AppLocalizations.of(context)!
+                              .translate('login')!),
                     ],
                   ),
                 ),

@@ -9,6 +9,7 @@ abstract class FirebaseRemoteDataSource {
   Future<void> getCreateCurrentUser(UserModel userModel);
   Future<void> signOut();
   Future<String> getCurrentUId();
+  Future<UserModel> getCurrentUser();
 }
 
 class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
@@ -53,4 +54,11 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
   Future<void> signUp(UserModel userModel) async =>
       await auth.createUserWithEmailAndPassword(
           email: userModel.email!, password: userModel.password!);
+
+  @override
+  Future<UserModel> getCurrentUser() async {
+    final userCollectionRef = firestore.collection("users");
+    final userId = await getCurrentUId();
+    return UserModel.fromSnapshot(await userCollectionRef.doc(userId).get());
+  }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:suberjet_clean_architecture/api/payment_endpoints.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 
 import '../cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
@@ -23,7 +23,7 @@ class PaymentCardWebViewScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text(AppStrings.paymetTitle),
+          title: Text(AppLocalizations.of(context)!.translate('paymetTitle')!),
           actions: [
             ElevatedButton(
                 onPressed: () {
@@ -39,8 +39,10 @@ class PaymentCardWebViewScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (state is CardPaymentFailure) {
-              return const Center(
-                child: CenterHintMsg(msg: AppStrings.thirdStepPaymetFail),
+              return Center(
+                child: CenterHintMsg(
+                    msg: AppLocalizations.of(context)!
+                        .translate('thirdStepPaymetFail')!),
               );
             } else if (state is CardPaymentLoaded) {
               return InAppWebView(
@@ -49,8 +51,10 @@ class PaymentCardWebViewScreen extends StatelessWidget {
                         '${PaymentEndPoints.iFrameCardEndpoint}=${state.paymentKeyCard}')),
               );
             } else {
-              return const Center(
-                child: CenterHintMsg(msg: AppStrings.unexpectedError),
+              return Center(
+                child: CenterHintMsg(
+                    msg: AppLocalizations.of(context)!
+                        .translate('unexpectedError')!),
               );
             }
           },

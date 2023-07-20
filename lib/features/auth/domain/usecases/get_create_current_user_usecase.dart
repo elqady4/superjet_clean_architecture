@@ -9,7 +9,7 @@ class GetCreateCurrentUserUsecase extends Usecase<Unit, UserEntity> {
 
   GetCreateCurrentUserUsecase({required this.firebaseRepository});
   @override
-  Future<Either<Failure, Unit>> call(UserEntity userEntity) async {
-    return await firebaseRepository.getCreateCurrentUser(userEntity);
+  Future<Either<Failure, Unit>> call(UserEntity params) async {
+    return await firebaseRepository.getCreateCurrentUser(params);
   }
 }

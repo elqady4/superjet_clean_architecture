@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 
 import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/dotet_line.dart';
@@ -39,7 +40,7 @@ class TripCard extends StatelessWidget {
                     style: StyleConst.simpleText,
                   ),
                   Text(
-                    'وصول',
+                    AppLocalizations.of(context)!.translate('arriveTime')!,
                     style: StyleConst.simpleText,
                   ),
                   Text(
@@ -123,7 +124,7 @@ class TripCard extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  'احجز الان',
+                  AppLocalizations.of(context)!.translate('ReverseNow')!,
                   style:
                       StyleConst.title4.copyWith(fontWeight: FontWeight.bold),
                 ),

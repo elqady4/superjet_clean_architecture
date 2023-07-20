@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
 
@@ -17,7 +17,7 @@ class TakeSeatScreen extends StatelessWidget {
           Scaffold(body: BlocBuilder<AvailableSeatsCubit, AvailableSeatsState>(
         builder: (context, state) {
           if (state is AvailableSeatsLoading) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (state is AvailableSeatsLoaded) {
             List<bool> seatAvaiableList = List.filled(49, true);
             List<int> reservedSeatsIndexes =
@@ -28,7 +28,9 @@ class TakeSeatScreen extends StatelessWidget {
             }
             return Column(
               children: [
-                const PageBackHeaderWidget(pageTitle: AppStrings.takeSeat),
+                PageBackHeaderWidget(
+                    pageTitle:
+                        AppLocalizations.of(context)!.translate('takeSeat')!),
                 const TripDestinationWidget(
                     tripDestination: "_tripsModel.from - _tripsModel.to",
                     tripDate: '_tripsModel.date'),
@@ -41,8 +43,8 @@ class TakeSeatScreen extends StatelessWidget {
               ],
             );
           } else {
-            return const CenterHintMsg(
-              msg: AppStrings.unexpectedError,
+            return CenterHintMsg(
+              msg: AppLocalizations.of(context)!.translate('unexpectedError')!,
             );
           }
         },

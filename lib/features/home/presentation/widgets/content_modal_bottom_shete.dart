@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 
 import '../../../../core/style/app_colors.dart';
-import '../../../../core/utils/app_strings.dart';
 import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/center_msg.dart';
 import '../../domain/entities/city_entitie.dart';
@@ -47,13 +47,13 @@ class ModalSheteContentWidget extends StatelessWidget {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8)),
                   label: Text(
-                    AppStrings.search,
+                    AppLocalizations.of(context)!.translate('search')!,
                     style: StyleConst.title3,
                   ),
                 ),
                 onChanged: (value) {
                   BlocProvider.of<CitySearchCubit>(context)
-                      .search(listCity!, value);
+                      .search(listCity!, value, context);
                 },
               ),
               Expanded(
@@ -64,7 +64,9 @@ class ModalSheteContentWidget extends StatelessWidget {
                     } else if (state is CitySearchInitial) {
                       return buildListCityModalShete(listCity!);
                     } else {
-                      return const CenterHintMsg(msg: AppStrings.notFound);
+                      return CenterHintMsg(
+                          msg: AppLocalizations.of(context)!
+                              .translate('notFound')!);
                     }
                   },
                 ),

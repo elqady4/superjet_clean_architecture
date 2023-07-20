@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations_setup.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:suberjet_clean_architecture/features/splash/presentation/screens/splash_screen.dart';
 import 'package:suberjet_clean_architecture/features/ticket_history/presentation/screens/ticket_history_screen.dart';
 
@@ -11,9 +14,6 @@ import 'core/utils/app_strings.dart';
 import 'core/style/style_constant.dart';
 import 'features/home/presentation/screens/home_screen.dart';
 import 'features/my_account/presentation/screens/profile_screen.dart';
-/*
-import 'features/profile/presentation/screens/profileScreen.dart';
-import 'features/tickets_history/presentation/screens/tickets_history_screen.dart';*/
 
 class SuperJetApp extends StatefulWidget {
   const SuperJetApp({super.key});
@@ -29,7 +29,7 @@ class _SuperJetAppState extends State<SuperJetApp> {
   int _selectedIndex = 1;
 
   _startDelay() {
-    _timer = Timer(const Duration(milliseconds: 2000), () {
+    _timer = Timer(const Duration(milliseconds: 3000), () {
       isSplashAppear = false;
       _timer.cancel();
       setState(() {});
@@ -49,17 +49,29 @@ class _SuperJetAppState extends State<SuperJetApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: AppRoutes.onGenerateRoute,
-      debugShowCheckedModeBanner: false,
-      theme: Theme.of(context).copyWith(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.indigo,
-        ),
-      ),
-      home: SafeArea(
-        child: isSplashAppear ? SplashScreen() : _buildTabsScreen(),
-      ),
+    return BlocBuilder<LocaleCubit, LocaleState>(
+      buildWhen: (previousState, currentState) {
+        return previousState != currentState;
+      },
+      builder: (context, state) {
+        return MaterialApp(
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+          locale: state.locale,
+          supportedLocales: AppLocalizationsSetup.supportedLocales,
+          localeResolutionCallback:
+              AppLocalizationsSetup.localeResolutionCallback,
+          localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
+          debugShowCheckedModeBanner: false,
+          theme: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.indigo,
+            ),
+          ),
+          home: SafeArea(
+            child: isSplashAppear ? const SplashScreen() : _buildTabsScreen(),
+          ),
+        );
+      },
     );
   }
 

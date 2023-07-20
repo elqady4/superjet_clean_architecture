@@ -9,7 +9,7 @@ class SignUpUsecase extends Usecase<Unit, UserEntity> {
 
   SignUpUsecase({required this.firebaseRepository});
   @override
-  Future<Either<Failure, Unit>> call(UserEntity userEntity) {
-    return firebaseRepository.signUp(userEntity);
+  Future<Either<Failure, Unit>> call(UserEntity params) {
+    return firebaseRepository.signUp(params);
   }
 }

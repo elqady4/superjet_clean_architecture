@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/entities/payment_info_entity.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
 
@@ -43,7 +45,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                   size: 14,
                 ),
                 Text(
-                  AppStrings.available,
+                  AppLocalizations.of(context)!.translate('available')!,
                   style: StyleConst.simpleText,
                 ),
                 Icon(
@@ -52,7 +54,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                   size: 14,
                 ),
                 Text(
-                  AppStrings.yourChoise,
+                  AppLocalizations.of(context)!.translate('yourChoise')!,
                   style: StyleConst.simpleText,
                 ),
                 Icon(
@@ -61,7 +63,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                   size: 14,
                 ),
                 Text(
-                  AppStrings.notAvailable,
+                  AppLocalizations.of(context)!.translate('notAvailable')!,
                   style: StyleConst.simpleText,
                 ),
                 CustomPaint(
@@ -73,7 +75,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                     //     arguments: widget.tripsModel);
                   },
                   child: Text(
-                    AppStrings.tripDetails,
+                    AppLocalizations.of(context)!.translate('tripDetails')!,
                     style: StyleConst.title4.copyWith(
                         color: AppColors.red, fontWeight: FontWeight.bold),
                   ),
@@ -364,11 +366,11 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${widget.ticketPrice} ${AppStrings.egPound}',
+                        '${widget.ticketPrice} ${AppLocalizations.of(context)!.translate('egPound')!}',
                         style: StyleConst.title3,
                       ),
                       Text(
-                        AppStrings.everyticket,
+                        AppLocalizations.of(context)!.translate('everyticket')!,
                         style: StyleConst.title3,
                       ),
                     ],
@@ -384,7 +386,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                         style: StyleConst.title3,
                       ),
                       Text(
-                        AppStrings.ticket,
+                        AppLocalizations.of(context)!.translate('ticket')!,
                         style: StyleConst.title3,
                       ),
                     ],
@@ -396,11 +398,11 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '$totalTicketPrice ${AppStrings.egPound}',
+                        '$totalTicketPrice ${AppLocalizations.of(context)!.translate('egPound')!}',
                         style: StyleConst.title3.copyWith(color: AppColors.red),
                       ),
                       Text(
-                        AppStrings.total,
+                        AppLocalizations.of(context)!.translate('total')!,
                         style: StyleConst.title3.copyWith(color: AppColors.red),
                       ),
                     ],
@@ -421,7 +423,8 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text(
-                              AppStrings.seatsWillReserved,
+                              AppLocalizations.of(context)!
+                                  .translate('seatsWillReserved')!,
                               style: StyleConst.title2,
                             ),
                             content: Text(
@@ -430,25 +433,55 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                                   .copyWith(color: Colors.blueGrey),
                             ),
                             actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.pushReplacementNamed(
-                                      context, Routes.choosePaymentMethodRoute);
-                                  PaymentInfoEntity paymentInfoEntity =
-                                      PaymentInfoEntity(
-                                          amountCents: totalTicketPrice * 100,
-                                          email: AppStrings.tempEmail,
-                                          firstName: AppStrings.tempFname,
-                                          lastName: AppStrings.tempLname,
-                                          phoneNumber: AppStrings.tempPhone);
-                                  BlocProvider.of<PaymentMethodCubit>(context)
-                                      .getFirstToken(paymentInfoEntity);
+                              BlocBuilder<UserDataCubit, UserDataState>(
+                                builder: (context, state) {
+                                  if (state is UserDataLoaded) {
+                                    return TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.pushReplacementNamed(context,
+                                            Routes.choosePaymentMethodRoute);
+                                        PaymentInfoEntity paymentInfoEntity =
+                                            PaymentInfoEntity(
+                                                amountCents:
+                                                    totalTicketPrice * 100,
+                                                email: state.userEntity.email!,
+                                                firstName:
+                                                    state.userEntity.name!,
+                                                lastName:
+                                                    state.userEntity.name!,
+                                                phoneNumber:
+                                                    state.userEntity.phone!);
+                                        BlocProvider.of<PaymentMethodCubit>(
+                                                context)
+                                            .getFirstToken(
+                                                paymentInfoEntity, context);
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .translate('ok')!,
+                                        style: StyleConst.title2,
+                                      ),
+                                    );
+                                  } else if (state is UserDataInitial) {
+                                    AuthState mstate =
+                                        BlocProvider.of<AuthCubit>(context)
+                                            .state;
+                                    if (mstate is Authenticated) {
+                                      if (mstate.isSignIn == true) {
+                                        BlocProvider.of<UserDataCubit>(context)
+                                            .getCurrentUser(context: context);
+                                        return const CircularProgressIndicator();
+                                      } else {
+                                        return const loginWidget();
+                                      }
+                                    } else {
+                                      return const loginWidget();
+                                    }
+                                  } else {
+                                    return const loginWidget();
+                                  }
                                 },
-                                child: Text(
-                                  AppStrings.ok,
-                                  style: StyleConst.title2,
-                                ),
                               ),
                             ],
                           );
@@ -458,7 +491,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        AppStrings.getNow,
+                        AppLocalizations.of(context)!.translate('getNow')!,
                         style:
                             StyleConst.title2.copyWith(color: AppColors.white),
                       ),
@@ -531,5 +564,18 @@ class _SeatsWidgetState extends State<SeatsWidget> {
         ),
       ),
     );
+  }
+}
+
+class loginWidget extends StatelessWidget {
+  const loginWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () => Navigator.pushReplacementNamed(context, Routes.loginRoute),
+        child: Text(AppLocalizations.of(context)!.translate('login')!));
   }
 }

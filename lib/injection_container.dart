@@ -2,15 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:suberjet_clean_architecture/features/auth/data/datasources/firebase_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/auth/data/repositories/firebase_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/repositories/firebase_repository.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/get_create_current_user_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/get_current_user_id_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/is_sign_in_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/data/datasources/available_seats_remote.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/data/repositories/available_seats_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/domain/usecases/get_available_seats_usecase.dart';
@@ -28,6 +31,12 @@ import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_payment_key_wallet_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_wallet_url_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
+import 'package:suberjet_clean_architecture/features/splash/data/datasources/lang_local_data_source.dart';
+import 'package:suberjet_clean_architecture/features/splash/data/repositories/lang_repository_impl.dart';
+import 'package:suberjet_clean_architecture/features/splash/domain/repositories/lang_repository.dart';
+import 'package:suberjet_clean_architecture/features/splash/domain/usecases/change_lang.dart';
+import 'package:suberjet_clean_architecture/features/splash/domain/usecases/get_saved_lang.dart';
+import 'package:suberjet_clean_architecture/features/splash/presentation/cubit/locale_cubit.dart';
 import 'core/network/netwok_info.dart';
 import 'features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'features/auth/presentation/cubit/user_cubit/user_cubit.dart';
@@ -71,9 +80,14 @@ Future<void> init() async {
       signInUsecase: sl(),
       signUpUsecase: sl()));
   sl.registerFactory<AuthCubit>(() => AuthCubit(
-      getCurrentUserIdUsecase: sl(),
-      isSignInUsecase: sl(),
-      signOutUsecase: sl()));
+        getCurrentUserIdUsecase: sl(),
+        isSignInUsecase: sl(),
+        signOutUsecase: sl(),
+      ));
+  sl.registerFactory<UserDataCubit>(
+      () => UserDataCubit(getCurrentUserUsecase: sl()));
+  sl.registerFactory<LocaleCubit>(
+      () => LocaleCubit(changeLangUseCase: sl(), getSavedLangUseCase: sl()));
 
   //-- Use Cases
   sl.registerLazySingleton<GetCitiesUsecase>(() => GetCitiesUsecase(sl()));
@@ -103,6 +117,12 @@ Future<void> init() async {
       () => SignOutUsecase(firebaseRepository: sl()));
   sl.registerLazySingleton<GetCurrentUserIdUsecase>(
       () => GetCurrentUserIdUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<GetCurrentUserUsecase>(
+      () => GetCurrentUserUsecase(firebaseRepository: sl()));
+  sl.registerLazySingleton<ChangeLangUseCase>(
+      () => ChangeLangUseCase(langRepository: sl()));
+  sl.registerLazySingleton<GetSavedLangUseCase>(
+      () => GetSavedLangUseCase(langRepository: sl()));
 
   //-- Repositories
   sl.registerLazySingleton<HomeRepository>(
@@ -122,6 +142,8 @@ Future<void> init() async {
       networkInfo: sl()));
   sl.registerLazySingleton<FirebaseRepository>(() => FirebaseRepositoryImpl(
       firebaseRemoteDataSource: sl(), networkInfo: sl()));
+  sl.registerLazySingleton<LangRepository>(
+      () => LangRepositoryImpl(langLocalDataSource: sl()));
 
   //-- Data Sources
   sl.registerLazySingleton<HomeRemoteDataSource>(
@@ -142,6 +164,8 @@ Future<void> init() async {
       () => GetWalletUrlRemoteDataSourceDIO());
   sl.registerLazySingleton<FirebaseRemoteDataSource>(
       () => FirebaseRemoteDataSourceImpl(auth: sl(), firestore: sl()));
+  sl.registerLazySingleton<LangLocalDataSource>(
+      () => LangLocalDataSourceImpl(sharedPreferences: sl()));
 
   //--Core
   sl.registerLazySingleton<NetworkInfo>(
@@ -149,6 +173,8 @@ Future<void> init() async {
 
   //--External
   sl.registerLazySingleton(() => InternetConnectionChecker());
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
 
   final auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;

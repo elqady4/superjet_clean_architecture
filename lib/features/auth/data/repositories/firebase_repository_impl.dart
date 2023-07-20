@@ -118,4 +118,26 @@ class FirebaseRepositoryImpl extends FirebaseRepository {
       return left(NoInternetFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, UserEntity>> getCurrentUser() async {
+    if (await networkInfo.isConnected) {
+      try {
+        UserModel user = await firebaseRemoteDataSource.getCurrentUser();
+
+        return Right(
+          UserEntity(
+            email: user.email,
+            name: user.name,
+            phone: user.phone,
+            uid: user.uid,
+          ),
+        );
+      } on ServerException catch (e) {
+        return Left(ServerFailure(msg: e.toString()));
+      }
+    } else {
+      return left(NoInternetFailure());
+    }
+  }
 }

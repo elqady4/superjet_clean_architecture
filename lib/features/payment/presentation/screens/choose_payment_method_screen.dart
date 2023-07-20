@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
@@ -29,8 +29,10 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (state is PaymentMethodFailure) {
-          return const Center(
-            child: CenterHintMsg(msg: AppStrings.secondStepPaymetFail),
+          return Center(
+            child: CenterHintMsg(
+                msg: AppLocalizations.of(context)!
+                    .translate('secondStepPaymetFail')!),
           );
         } else if (state is PaymentMethodLoaded) {
           return Column(
@@ -42,7 +44,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                   Navigator.pushReplacementNamed(
                       context, Routes.paymentCardWebviewRoute);
                   BlocProvider.of<CardPaymentCubit>(context)
-                      .getPaymentKeyCard(state.paymentInfoEntity);
+                      .getPaymentKeyCard(state.paymentInfoEntity, context);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
@@ -73,7 +75,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                   Navigator.pushReplacementNamed(
                       context, Routes.paymentWalletWebviewRoute);
                   BlocProvider.of<WalletPaymentCubit>(context)
-                      .getPaymentKeyWallet(state.paymentInfoEntity);
+                      .getPaymentKeyWallet(state.paymentInfoEntity, context);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
@@ -105,8 +107,10 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
             ],
           );
         } else {
-          return const Center(
-            child: CenterHintMsg(msg: AppStrings.unexpectedError),
+          return Center(
+            child: CenterHintMsg(
+                msg: AppLocalizations.of(context)!
+                    .translate('unexpectedError')!),
           );
         }
       },

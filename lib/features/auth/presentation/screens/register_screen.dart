@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 import 'package:suberjet_clean_architecture/core/widgets/m_button.dart';
@@ -15,11 +15,11 @@ class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController? nameController = TextEditingController();
-  TextEditingController? phoneController = TextEditingController();
-  TextEditingController? emailController = TextEditingController();
-  TextEditingController? passwordController = TextEditingController();
-  TextEditingController? repasswordController = TextEditingController();
+  final TextEditingController? nameController = TextEditingController();
+  final TextEditingController? phoneController = TextEditingController();
+  final TextEditingController? emailController = TextEditingController();
+  final TextEditingController? passwordController = TextEditingController();
+  final TextEditingController? repasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class RegisterScreen extends StatelessWidget {
                   backgroundColor: AppColors.green,
                   duration: const Duration(seconds: 3),
                 );
-                BlocProvider.of<AuthCubit>(context).loggedIn();
+                BlocProvider.of<AuthCubit>(context).loggedIn(context);
                 Navigator.pop(context);
               } else if (state is UserFailure) {
                 CustomSnackBar.show(
@@ -48,74 +48,82 @@ class RegisterScreen extends StatelessWidget {
             },
             child: Column(
               children: [
-                const PageBackHeaderWidget(pageTitle: AppStrings.newAccount),
-                Image.asset(
-                  'assets/home/SA.png',
-                  width: 150,
-                ),
+                PageBackHeaderWidget(
+                    pageTitle:
+                        AppLocalizations.of(context)!.translate('newAccount')!),
                 const SizedBox(
                   height: 20,
                 ),
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                            validator: validate,
-                            controller: nameController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                fillColor: AppColors.backColor,
-                                label: const Text(AppStrings.mName))),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                            validator: validate,
-                            controller: phoneController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                fillColor: AppColors.backColor,
-                                label: const Text(AppStrings.mPhone))),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                            validator: validate,
-                            controller: emailController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                fillColor: AppColors.backColor,
-                                label: const Text(AppStrings.mEmail))),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                            validator: validate,
-                            controller: passwordController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                fillColor: AppColors.backColor,
-                                label: const Text(AppStrings.mPassword),
-                                suffixIcon: const Icon(Icons.remove_red_eye))),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        TextFormField(
-                            validator: validate,
-                            controller: repasswordController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                fillColor: AppColors.backColor,
-                                label: const Text(AppStrings.mRePassword),
-                                suffixIcon: const Icon(Icons.remove_red_eye))),
-                      ],
-                    )),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                              validator: validate,
+                              controller: nameController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  fillColor: AppColors.backColor,
+                                  label: Text(AppLocalizations.of(context)!
+                                      .translate('mName')!))),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                              validator: validate,
+                              controller: phoneController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  fillColor: AppColors.backColor,
+                                  label: Text(AppLocalizations.of(context)!
+                                      .translate('mPhone')!))),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                              validator: validate,
+                              controller: emailController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  fillColor: AppColors.backColor,
+                                  label: Text(AppLocalizations.of(context)!
+                                      .translate('mEmail')!))),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                              validator: validate,
+                              controller: passwordController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  fillColor: AppColors.backColor,
+                                  label: Text(AppLocalizations.of(context)!
+                                      .translate('mPassword')!),
+                                  suffixIcon:
+                                      const Icon(Icons.remove_red_eye))),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                              validator: validate,
+                              controller: repasswordController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  fillColor: AppColors.backColor,
+                                  label: Text(AppLocalizations.of(context)!
+                                      .translate('mRePassword')!),
+                                  suffixIcon:
+                                      const Icon(Icons.remove_red_eye))),
+                        ],
+                      )),
+                ),
                 const SizedBox(
                   height: 8,
                 ),
@@ -132,12 +140,10 @@ class RegisterScreen extends StatelessWidget {
                           );
                           BlocProvider.of<UserCubit>(context)
                               .submitSingUp(userEntity: userEntity);
-                        } else {
-                          print('Password not matching');
-                        }
+                        } else {}
                       }
                     },
-                    title: AppStrings.register)
+                    title: AppLocalizations.of(context)!.translate('register')!)
               ],
             ),
           ),

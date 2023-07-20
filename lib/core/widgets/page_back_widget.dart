@@ -18,9 +18,20 @@ class PageBackHeaderWidget extends StatelessWidget {
           icon: const Icon(Icons.chevron_left_outlined),
           iconSize: 50,
         ),
-        Text(
-          pageTitle,
-          style: StyleConst.title2,
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                pageTitle,
+                style: StyleConst.title2,
+              ),
+              Image.asset(
+                'assets/home/SA.png',
+                width: 150,
+              ),
+            ],
+          ),
         ),
       ],
     );

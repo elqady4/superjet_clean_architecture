@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 
 import '../../../../core/utils/app_assets_strings.dart';
-import '../../../../core/utils/app_strings.dart';
 import '../../../../core/style/style_constant.dart';
 import '../../../../core/widgets/center_msg.dart';
 import '../../../../core/widgets/m_button.dart';
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  AppStrings.whereToTravel,
+                  AppLocalizations.of(context)!.translate('whereToTravel')!,
                   style: StyleConst.title1,
                 ),
               ),
@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
           BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               if (state is HomeInitialState) {
-                BlocProvider.of<HomeCubit>(context).getCities();
+                BlocProvider.of<HomeCubit>(context).getCities(context);
                 return const RefreshProgressIndicator();
               } else if (state is HomeLoadingState) {
                 return const RefreshProgressIndicator();
@@ -86,7 +86,8 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                               icon: Icons.location_on,
-                              headerText: AppStrings.mFrom,
+                              headerText: AppLocalizations.of(context)!
+                                  .translate('mFrom')!,
                               cityText: BlocProvider.of<CityTextCubit>(context)
                                   .cityFrom,
                             ),
@@ -102,7 +103,8 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                               icon: Icons.location_on,
-                              headerText: AppStrings.mTo,
+                              headerText: AppLocalizations.of(context)!
+                                  .translate('mTo')!,
                               cityText: BlocProvider.of<CityTextCubit>(context)
                                   .cityTo,
                             ),
@@ -124,12 +126,14 @@ class HomeScreen extends StatelessWidget {
                                 //print('date is:' + dateChoose!);
                               },
                               icon: Icons.calendar_month,
-                              headerText: AppStrings.date,
+                              headerText: AppLocalizations.of(context)!
+                                  .translate('date')!,
                               cityText:
                                   BlocProvider.of<CityTextCubit>(context).date,
                             ),
                             MButton(
-                              title: AppStrings.search,
+                              title: AppLocalizations.of(context)!
+                                  .translate('search')!,
                               onTap: () {
                                 String destinationCity =
                                     BlocProvider.of<CityTextCubit>(context)
@@ -144,10 +148,12 @@ class HomeScreen extends StatelessWidget {
                                     arrivalCity.isNotEmpty &&
                                     travelDate.isNotEmpty) {
                                   BlocProvider.of<AvailableTripsCubit>(context)
-                                      .getAvailableTrips(TripSearchEntity(
-                                          destinationCity: destinationCity,
-                                          arrivalCity: arrivalCity,
-                                          travelDate: travelDate));
+                                      .getAvailableTrips(
+                                          TripSearchEntity(
+                                              destinationCity: destinationCity,
+                                              arrivalCity: arrivalCity,
+                                              travelDate: travelDate),
+                                          context);
                                   Navigator.pushNamed(
                                       context, Routes.availableTripsRoute);
                                 }
@@ -166,14 +172,15 @@ class HomeScreen extends StatelessWidget {
                 );
               } else if (state is HomeFailureState) {
                 return MButton(
-                  title: AppStrings.reload,
+                  title: AppLocalizations.of(context)!.translate('reload')!,
                   onTap: () {
-                    BlocProvider.of<HomeCubit>(context).getCities();
+                    BlocProvider.of<HomeCubit>(context).getCities(context);
                   },
                 );
               } else {
-                return const CenterHintMsg(
-                  msg: AppStrings.unexpectedError,
+                return CenterHintMsg(
+                  msg: AppLocalizations.of(context)!
+                      .translate('unexpectedError')!,
                   color: Colors.red,
                 );
               }

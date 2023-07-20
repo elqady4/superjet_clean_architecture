@@ -4,16 +4,18 @@ import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import '../../../../core/style/style_constant.dart';
 
 class ProfileNavWidget extends StatelessWidget {
-  const ProfileNavWidget({
-    Key? key,
-    required this.icon,
-    required this.title,
-    this.onTap,
-  }) : super(key: key);
+  const ProfileNavWidget(
+      {Key? key,
+      required this.icon,
+      required this.title,
+      this.onTap,
+      this.iconNavigat})
+      : super(key: key);
 
   final IconData icon;
   final String title;
   final void Function()? onTap;
+  final IconData? iconNavigat;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class ProfileNavWidget extends StatelessWidget {
                 flex: 1,
               ),
               Icon(
-                Icons.open_in_new,
+                iconNavigat ?? Icons.open_in_new,
                 color: AppColors.primaryColor,
                 size: 30,
               )

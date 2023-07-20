@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 
-import '../../../../core/utils/app_strings.dart';
 import '../../../../core/widgets/header_widget.dart';
 
 class TicketHistoryScreen extends StatelessWidget {
@@ -8,10 +8,10 @@ class TicketHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         HeaderWidget(
-          title: AppStrings.ticketsHistory,
+          title: AppLocalizations.of(context)!.translate('ticketsHistory')!,
         ),
       ],
     );

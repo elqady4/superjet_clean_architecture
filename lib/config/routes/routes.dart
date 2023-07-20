@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/screens/login_screen.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/screens/personal_information_screen.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/screens/register_screen.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/screens/take_seat_screen.dart';
+import 'package:suberjet_clean_architecture/features/my_account/presentation/screens/settings_screen.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/screens/choose_payment_method_screen.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/screens/payment_card_webview_screen.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/screens/payment_wallet_webview_screen%20copy.dart';
 import 'package:suberjet_clean_architecture/features/splash/presentation/screens/splash_screen.dart';
 import 'package:suberjet_clean_architecture/super_jet_app.dart';
 
-import '../../core/utils/app_strings.dart';
 import '../../features/available_trips/presentation/screens/trips_available_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 
@@ -23,6 +25,8 @@ class Routes {
   static const String paymentWalletWebviewRoute = '/paymentWalletWebview';
   static const String registerRoute = '/register';
   static const String loginRoute = '/login';
+  static const String personalInformationRoute = '/personalInformation';
+  static const String settingRoute = '/settingsScreen';
 }
 
 class AppRoutes {
@@ -69,6 +73,14 @@ class AppRoutes {
         return MaterialPageRoute(builder: ((context) {
           return LoginScreen();
         }));
+      case Routes.personalInformationRoute:
+        return MaterialPageRoute(builder: ((context) {
+          return PersonalInformationScreen();
+        }));
+      case Routes.settingRoute:
+        return MaterialPageRoute(builder: ((context) {
+          return const SettingsScreen();
+        }));
       default:
         return undefinedRoute();
     }
@@ -76,9 +88,10 @@ class AppRoutes {
 
   static Route<dynamic> undefinedRoute() {
     return MaterialPageRoute(
-        builder: ((context) => const Scaffold(
+        builder: ((context) => Scaffold(
               body: Center(
-                child: Text(AppStrings.noRouteFound),
+                child: Text(
+                    AppLocalizations.of(context)!.translate('noRouteFound')!),
               ),
             )));
   }

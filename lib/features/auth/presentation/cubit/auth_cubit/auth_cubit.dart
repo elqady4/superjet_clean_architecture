@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/get_current_user_id_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/is_sign_in_usecase.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/usecases/sign_out_usecase.dart';
@@ -15,36 +16,38 @@ class AuthCubit extends Cubit<AuthState> {
   final SignOutUsecase signOutUsecase;
   final GetCurrentUserIdUsecase getCurrentUserIdUsecase;
 
-  AuthCubit(
-      {required this.isSignInUsecase,
-      required this.signOutUsecase,
-      required this.getCurrentUserIdUsecase})
-      : super(AuthInitial());
+  AuthCubit({
+    required this.isSignInUsecase,
+    required this.signOutUsecase,
+    required this.getCurrentUserIdUsecase,
+  }) : super(AuthInitial());
 
-  Future<void> appStarted() async {
+  Future<void> appStarted(BuildContext context) async {
     emit(AuthLoading());
     Either<Failure, bool> result = await isSignInUsecase(unit);
     result.fold(
-        (failure) =>
-            emit(const UnAuthenticated(msg: AppStrings.authenticatedFailure)),
+        (failure) => emit(UnAuthenticated(
+            msg: AppLocalizations.of(context)!
+                .translate('authenticatedFailure')!)),
         (isSignIn) => emit(Authenticated(isSignIn: isSignIn)));
   }
 
-  Future<void> loggedIn() async {
+  Future<void> loggedIn(BuildContext context) async {
     emit(AuthLoading());
     Either<Failure, String> result = await getCurrentUserIdUsecase(unit);
     result.fold(
-        (failure) =>
-            emit(const UnAuthenticated(msg: AppStrings.loggingInFailure)),
+        (failure) => emit(UnAuthenticated(
+            msg: AppLocalizations.of(context)!.translate('loggingInFailure')!)),
         (userId) => emit(Authenticated(userId: userId, isSignIn: true)));
   }
 
-  Future<void> loggedOut() async {
+  Future<void> loggedOut(BuildContext context) async {
     emit(AuthLoading());
     Either<Failure, Unit> result = await signOutUsecase(unit);
     result.fold(
-        (falure) =>
-            emit(const UnAuthenticated(msg: AppStrings.loggingOutFailure)),
+        (falure) => emit(UnAuthenticated(
+            msg:
+                AppLocalizations.of(context)!.translate('loggingOutFailure')!)),
         (r) => emit(const UnAuthenticated()));
   }
 

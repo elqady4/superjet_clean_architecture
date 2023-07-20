@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 
 import '../../../../core/widgets/header_widget.dart';
 import '../widgets/profile_nav_widget.dart';
@@ -14,40 +15,44 @@ class MyAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const HeaderWidget(
-          title: AppStrings.myAccount,
+        HeaderWidget(
+          title: AppLocalizations.of(context)!.translate('myAccount')!,
         ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 const SinginOrMyProfile(),
-                const ProfileNavWidget(
-                  title: AppStrings.msettings,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!.translate('settings')!,
                   icon: Icons.settings,
+                  onTap: () =>
+                      Navigator.pushNamed(context, Routes.settingRoute),
                 ),
-                const ProfileNavWidget(
-                  title: AppStrings.freeTrips,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!.translate('freeTrips')!,
                   icon: Icons.shopping_bag,
                 ),
-                const ProfileNavWidget(
-                  title: AppStrings.wallet,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!.translate('wallet')!,
                   icon: Icons.account_balance_wallet,
                 ),
-                const ProfileNavWidget(
-                  title: AppStrings.smartSubscription,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!
+                      .translate('smartSubscription')!,
                   icon: Icons.credit_card,
                 ),
-                const ProfileNavWidget(
-                  title: AppStrings.aboutUs,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!.translate('aboutUs')!,
                   icon: Icons.help,
                 ),
-                const ProfileNavWidget(
-                  title: AppStrings.usageAgreement,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!
+                      .translate('usageAgreement')!,
                   icon: Icons.edit_document,
                 ),
-                const ProfileNavWidget(
-                  title: AppStrings.callUs,
+                ProfileNavWidget(
+                  title: AppLocalizations.of(context)!.translate('callUs')!,
                   icon: Icons.error,
                 ),
                 BlocBuilder<AuthCubit, AuthState>(
@@ -55,10 +60,14 @@ class MyAccountScreen extends StatelessWidget {
                     if (state is Authenticated) {
                       if (state.isSignIn == true) {
                         return ProfileNavWidget(
-                          title: AppStrings.logOut,
+                          title: AppLocalizations.of(context)!
+                              .translate('logOut')!,
                           icon: Icons.logout,
                           onTap: () {
-                            BlocProvider.of<AuthCubit>(context).loggedOut();
+                            BlocProvider.of<AuthCubit>(context)
+                                .loggedOut(context);
+                            BlocProvider.of<UserDataCubit>(context)
+                                .removeUserDataWithLogout();
                           },
                         );
                       } else {
@@ -90,17 +99,22 @@ class SinginOrMyProfile extends StatelessWidget {
         if (state is Authenticated) {
           return ProfileNavWidget(
               title: state.isSignIn!
-                  ? AppStrings.personalInformation
-                  : AppStrings.login,
+                  ? AppLocalizations.of(context)!
+                      .translate('personalInformation')!
+                  : AppLocalizations.of(context)!.translate('login')!,
               icon: Icons.person,
               onTap: () {
                 if (state.isSignIn == false) {
                   Navigator.pushNamed(context, Routes.loginRoute);
-                } else {}
+                } else {
+                  BlocProvider.of<UserDataCubit>(context)
+                      .getCurrentUser(context: context);
+                  Navigator.pushNamed(context, Routes.personalInformationRoute);
+                }
               });
         } else {
           return ProfileNavWidget(
-              title: AppStrings.login,
+              title: AppLocalizations.of(context)!.translate('login')!,
               icon: Icons.person,
               onTap: () {
                 Navigator.pushNamed(context, Routes.loginRoute);

@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suberjet_clean_architecture/core/utils/app_strings.dart';
+import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/domain/usecases/get_available_seats_usecase.dart';
 
 import '../../../../../core/errors/failure.dart';
@@ -14,13 +15,13 @@ class AvailableSeatsCubit extends Cubit<AvailableSeatsState> {
   AvailableSeatsCubit({required this.getAvailableSeatsUsecase})
       : super(AvailableSeatsInitial());
 
-  void getAvailableSeats(int tripID) async {
+  void getAvailableSeats(int tripID, BuildContext context) async {
     emit(AvailableSeatsLoading());
     Either<Failure, AvailableSeatsEntity> result =
         await getAvailableSeatsUsecase(tripID);
     result.fold(
-        (failure) =>
-            emit(const AvailableSeatsFailure(msg: AppStrings.unexpectedError)),
+        (failure) => emit(AvailableSeatsFailure(
+            msg: AppLocalizations.of(context)!.translate('unexpectedError')!)),
         (availableSeatsEntity) => emit(
             AvailableSeatsLoaded(availableSeatsEntity: availableSeatsEntity)));
   }

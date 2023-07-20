@@ -1,5 +1,6 @@
 import '../../domain/entities/payment_info_entity.dart';
 
+// ignore: must_be_immutable
 class PaymentInfoModel extends PaymentInfoEntity {
   PaymentInfoModel(
       {super.authToken,
