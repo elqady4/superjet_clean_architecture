@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
               ),
               Image.asset(
                 AppAssetsStrings.bus,
-                width: 150,
+                width: 130,
               ),
             ],
           ),
