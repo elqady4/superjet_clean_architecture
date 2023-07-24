@@ -8,9 +8,12 @@ import 'package:suberjet_clean_architecture/features/payment/data/datasources/ge
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_payment_key_card_remote_data_source.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_payment_key_wallet_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_wallet_url_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/reverse_seats_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/models/payment_info_model.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/models/reverse_seats_model.dart';
 
 import 'package:suberjet_clean_architecture/features/payment/domain/entities/payment_info_entity.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/entities/reverse_seats_entity.dart';
 
 import '../../domain/repositories/payment_repository.dart';
 
@@ -20,6 +23,7 @@ class PaymentRepositoryImpl extends PaymentRepository {
   final GetPaymentKeyCardRemoteDataSource getPaymentKeyCardRemoteDataSource;
   final GetPaymentKeyWalletRemoteDataSource getPaymentKeyWalletRemoteDataSource;
   final GetWalletUrlRemoteDataSource getWalletUrlRemoteDataSource;
+  final ReverseSeatsRemoteDataSource reverseSeatsRemoteDataSource;
   final NetworkInfo networkInfo;
 
   PaymentRepositoryImpl(
@@ -28,6 +32,7 @@ class PaymentRepositoryImpl extends PaymentRepository {
       required this.getPaymentKeyCardRemoteDataSource,
       required this.getPaymentKeyWalletRemoteDataSource,
       required this.getWalletUrlRemoteDataSource,
+      required this.reverseSeatsRemoteDataSource,
       required this.networkInfo});
   @override
   Future<Either<Failure, String>> getFirstToken(String apiKey) async {
@@ -121,6 +126,32 @@ class PaymentRepositoryImpl extends PaymentRepository {
       try {
         var result =
             await getWalletUrlRemoteDataSource.getWalletUrl(paymentKey);
+        return Right(result);
+      } on ServerException {
+        return left(ServerFailure());
+      }
+    } else {
+      return left(NoInternetFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> reverseSeats(
+      ReverseSeatsEntity reverseSeatsEntity) async {
+    if (await networkInfo.isConnected) {
+      try {
+        ReverseSeatsModel reverseSeatsModel = ReverseSeatsModel(
+            tripId: reverseSeatsEntity.tripId,
+            orderId: reverseSeatsEntity.orderId,
+            companyName: reverseSeatsEntity.companyName,
+            cityFrom: reverseSeatsEntity.cityFrom,
+            cityTo: reverseSeatsEntity.cityTo,
+            travelDate: reverseSeatsEntity.travelDate,
+            travelTime: reverseSeatsEntity.travelTime,
+            busType: reverseSeatsEntity.busType,
+            seats: reverseSeatsEntity.seats);
+        var result =
+            await reverseSeatsRemoteDataSource.reverseSeats(reverseSeatsModel);
         return Right(result);
       } on ServerException {
         return left(ServerFailure());

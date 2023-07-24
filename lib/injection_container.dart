@@ -18,11 +18,13 @@ import 'package:suberjet_clean_architecture/features/available_trips/data/dataso
 import 'package:suberjet_clean_architecture/features/available_trips/data/repositories/available_seats_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/domain/usecases/get_available_seats_usecase.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/selected_seats_cubit/selected_seats_cubit.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_first_token_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_order_id_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_payment_key_card_remote_data_source.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_payment_key_wallet_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/datasources/get_wallet_url_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/payment/data/datasources/reverse_seats_remote_datasource.dart';
 import 'package:suberjet_clean_architecture/features/payment/data/repositories/payment_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/repositories/payment_repository.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_first_token_usecase.dart';
@@ -30,7 +32,9 @@ import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_payment_key_card_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_payment_key_wallet_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/usecases/get_wallet_url_usecase.dart';
+import 'package:suberjet_clean_architecture/features/payment/domain/usecases/reverse_seats_usecase.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
+import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/cubit/reverse_seats_cubit.dart';
 import 'package:suberjet_clean_architecture/features/splash/data/datasources/lang_local_data_source.dart';
 import 'package:suberjet_clean_architecture/features/splash/data/repositories/lang_repository_impl.dart';
 import 'package:suberjet_clean_architecture/features/splash/domain/repositories/lang_repository.dart';
@@ -88,6 +92,9 @@ Future<void> init() async {
       () => UserDataCubit(getCurrentUserUsecase: sl()));
   sl.registerFactory<LocaleCubit>(
       () => LocaleCubit(changeLangUseCase: sl(), getSavedLangUseCase: sl()));
+  sl.registerFactory<SelectedSeatsCubit>(() => SelectedSeatsCubit());
+  sl.registerFactory<ReverseSeatsCubit>(
+      () => ReverseSeatsCubit(reverseSeatsUsecase: sl()));
 
   //-- Use Cases
   sl.registerLazySingleton<GetCitiesUsecase>(() => GetCitiesUsecase(sl()));
@@ -121,6 +128,8 @@ Future<void> init() async {
       () => GetCurrentUserUsecase(firebaseRepository: sl()));
   sl.registerLazySingleton<ChangeLangUseCase>(
       () => ChangeLangUseCase(langRepository: sl()));
+  sl.registerLazySingleton<ReverseSeatsUsecase>(
+      () => ReverseSeatsUsecase(paymentRepository: sl()));
   sl.registerLazySingleton<GetSavedLangUseCase>(
       () => GetSavedLangUseCase(langRepository: sl()));
 
@@ -139,6 +148,7 @@ Future<void> init() async {
       getPaymentKeyCardRemoteDataSource: sl(),
       getPaymentKeyWalletRemoteDataSource: sl(),
       getWalletUrlRemoteDataSource: sl(),
+      reverseSeatsRemoteDataSource: sl(),
       networkInfo: sl()));
   sl.registerLazySingleton<FirebaseRepository>(() => FirebaseRepositoryImpl(
       firebaseRemoteDataSource: sl(), networkInfo: sl()));
@@ -164,6 +174,8 @@ Future<void> init() async {
       () => GetWalletUrlRemoteDataSourceDIO());
   sl.registerLazySingleton<FirebaseRemoteDataSource>(
       () => FirebaseRemoteDataSourceImpl(auth: sl(), firestore: sl()));
+  sl.registerLazySingleton<ReverseSeatsRemoteDataSource>(
+      () => ReverseSeatsRemoteDataSourceDIO());
   sl.registerLazySingleton<LangLocalDataSource>(
       () => LangLocalDataSourceImpl(sharedPreferences: sl()));
 

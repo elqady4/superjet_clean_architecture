@@ -68,5 +68,15 @@
   "signUpError": "فشل التسجيل",
   "passwordShort": "يجب ان تتكون كلمة المرور علي الاقل من 6 احرف",
   "notValidEmail": "البريد الالكتروني غير صحيح",
-  "emailAlreadyUsed": "البريد الالكتروني مستخدم من قبل"
+  "emailAlreadyUsed": "البريد الالكتروني مستخدم من قبل",
+  "paymentSuccess": "تمت عملية الدفع بنجاح",
+  "paymentfail": "لقد فشلت عملية الدفع",
+  "ticket_num": "رقم التذكرة",
+  "trip_num": "رقم الرحله",
+  "company": "شركة",
+  "from": "من",
+  "to": "الي",
+  "seats_num": "رقم المقاعد",
+  "busClass": "نوع الخدمة",
+  "time": "الوقت"
 }

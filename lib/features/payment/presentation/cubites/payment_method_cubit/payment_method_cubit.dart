@@ -15,6 +15,8 @@ part 'payment_method_state.dart';
 class PaymentMethodCubit extends Cubit<PaymentMethodState> {
   final GetFirstTokenUsecase getFirstTokenUsecase;
   final GetOrderIdUsecase getOrderIdUsecase;
+
+  int orderID = 0;
   PaymentMethodCubit(
       {required this.getFirstTokenUsecase, required this.getOrderIdUsecase})
       : super(PaymentMethodInitial());
@@ -39,6 +41,7 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
         (failure) => emit(PaymentMethodFailure(
             msg: AppLocalizations.of(context)!
                 .translate('secondStepPaymetFail')!)), (orderId) {
+      orderID = int.parse(orderId);
       params.orderID = orderId;
       emit(PaymentMethodLoaded(paymentInfoEntity: params));
     });

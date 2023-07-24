@@ -9,4 +9,6 @@ class EndPoints {
       '$baseUrl/a196f4aa-b11c-41b1-8419-15ec1d26280f';
   static String stopLocationsEndPoints =
       "$baseUrl/6ae1f3c6-aba2-49f1-9e18-553571c6c1b4";
+  static String reverseSeats =
+      "https://verism-coder.000webhostapp.com/add_ticket.php";
 }

@@ -12,6 +12,12 @@ part 'available_seats_state.dart';
 
 class AvailableSeatsCubit extends Cubit<AvailableSeatsState> {
   final GetAvailableSeatsUsecase getAvailableSeatsUsecase;
+
+  int tripId = 0;
+  String company = '';
+  String travelTime = '';
+  String busType = '';
+
   AvailableSeatsCubit({required this.getAvailableSeatsUsecase})
       : super(AvailableSeatsInitial());
 
@@ -24,5 +30,17 @@ class AvailableSeatsCubit extends Cubit<AvailableSeatsState> {
             msg: AppLocalizations.of(context)!.translate('unexpectedError')!)),
         (availableSeatsEntity) => emit(
             AvailableSeatsLoaded(availableSeatsEntity: availableSeatsEntity)));
+  }
+
+  void selectedTripDetails({
+    required int mTripId,
+    required String mCompany,
+    required String mTravelTime,
+    required String mBusType,
+  }) {
+    tripId = mTripId;
+    company = mCompany;
+    travelTime = mTravelTime;
+    busType = mBusType;
   }
 }

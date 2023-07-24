@@ -6,6 +6,7 @@ import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
+import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/selected_seats_cubit/selected_seats_cubit.dart';
 import 'package:suberjet_clean_architecture/features/payment/domain/entities/payment_info_entity.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
 
@@ -438,6 +439,10 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                                   if (state is UserDataLoaded) {
                                     return TextButton(
                                       onPressed: () {
+                                        BlocProvider.of<SelectedSeatsCubit>(
+                                                    context)
+                                                .mselectedSeats =
+                                            onClickSelectedSeats;
                                         Navigator.of(context).pop();
                                         Navigator.pushReplacementNamed(context,
                                             Routes.choosePaymentMethodRoute);

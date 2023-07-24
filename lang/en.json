@@ -32,7 +32,7 @@
   "search": "Search",
   "mFrom": "From",
   "mTo": "To",
-  "paymetTitle" : "Payment Method",
+  "paymetTitle": "Payment Method",
   "firstStepPaymetFail": "First Step Paymet Fail",
   "secondStepPaymetFail": "Second Step Paymet Fail",
   "thirdStepPaymetFail": "Third Step Paymet Fail",
@@ -71,5 +71,15 @@
   "locale": "locale",
   "passwordShort": "Password Should be at least 6 characters",
   "notValidEmail": "Email Must be Valid",
-  "emailAlreadyUsed": "Email Already Used"
+  "emailAlreadyUsed": "Email Already Used",
+  "paymentSuccess": "Payment Success",
+  "paymentfail": "Payment Faild",
+  "ticket_num": "Ticket Number",
+  "trip_num": "Trip Number",
+  "company": "Company",
+  "from": "From",
+  "to": "To",
+  "seats_num": "Seats Number",
+  "busClass": "Bus Class",
+  "time": "Time"
 }

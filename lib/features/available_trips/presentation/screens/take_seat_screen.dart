@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 import 'package:suberjet_clean_architecture/features/available_trips/presentation/cubites/available_seats/available_seats_cubit.dart';
+import 'package:suberjet_clean_architecture/features/home/presentation/cubits/city_text_cubit/city_text_cubit.dart';
 
 import '../../../../core/widgets/page_back_widget.dart';
 import '../../../home/presentation/widgets/trip_destination_widget.dart';
@@ -31,9 +32,10 @@ class TakeSeatScreen extends StatelessWidget {
                 PageBackHeaderWidget(
                     pageTitle:
                         AppLocalizations.of(context)!.translate('takeSeat')!),
-                const TripDestinationWidget(
-                    tripDestination: "_tripsModel.from - _tripsModel.to",
-                    tripDate: '_tripsModel.date'),
+                TripDestinationWidget(
+                    tripDestination:
+                        "${BlocProvider.of<CityTextCubit>(context).cityFrom} - ${BlocProvider.of<CityTextCubit>(context).cityTo}",
+                    tripDate: BlocProvider.of<CityTextCubit>(context).date),
                 Expanded(
                     child: SeatsWidget(
                   booked: seatAvaiableList,
