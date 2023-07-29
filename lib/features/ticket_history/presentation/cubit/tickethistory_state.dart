@@ -8,3 +8,17 @@ abstract class TickethistoryState extends Equatable {
 }
 
 class TickethistoryInitial extends TickethistoryState {}
+
+class TickethistoryLoading extends TickethistoryState {}
+
+class TickethistoryLoaded extends TickethistoryState {
+  final List<TicketEntity> listTicketEntity;
+
+  const TickethistoryLoaded({required this.listTicketEntity});
+}
+
+class TickethistoryFail extends TickethistoryState {
+  final String msg;
+
+  const TickethistoryFail({required this.msg});
+}

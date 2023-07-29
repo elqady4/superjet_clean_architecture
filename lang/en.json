@@ -81,5 +81,8 @@
   "to": "To",
   "seats_num": "Seats Number",
   "busClass": "Bus Class",
-  "time": "Time"
+  "time": "Time",
+  "fail_tickets": "Fail While Get Your Tickets",
+  "payMethod": "Pay With",
+  "amount": "Payed"
 }

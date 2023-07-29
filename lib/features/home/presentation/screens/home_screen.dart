@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 
 import '../../../../core/utils/app_assets_strings.dart';
 import '../../../../core/style/style_constant.dart';
@@ -23,6 +25,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getCurrentUserDetails(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -198,4 +201,13 @@ class HomeScreen extends StatelessWidget {
 
 String formatDate(DateTime date) {
   return "${date.year}/${date.month}/${date.day}";
+}
+
+void getCurrentUserDetails(BuildContext context) {
+  AuthState mstate = BlocProvider.of<AuthCubit>(context).state;
+  if (mstate is Authenticated) {
+    if (mstate.isSignIn == true) {
+      BlocProvider.of<UserDataCubit>(context).getCurrentUser(context: context);
+    }
+  }
 }

@@ -41,6 +41,11 @@ import 'package:suberjet_clean_architecture/features/splash/domain/repositories/
 import 'package:suberjet_clean_architecture/features/splash/domain/usecases/change_lang.dart';
 import 'package:suberjet_clean_architecture/features/splash/domain/usecases/get_saved_lang.dart';
 import 'package:suberjet_clean_architecture/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/data/datasources/get_tickets_remote_datasource.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/data/repositories/ticket_repository_imp.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/domain/repositories/ticket_repository.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/domain/usecases/get_my_tickets_usecase.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/presentation/cubit/tickethistory_cubit.dart';
 import 'core/network/netwok_info.dart';
 import 'features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'features/auth/presentation/cubit/user_cubit/user_cubit.dart';
@@ -95,6 +100,8 @@ Future<void> init() async {
   sl.registerFactory<SelectedSeatsCubit>(() => SelectedSeatsCubit());
   sl.registerFactory<ReverseSeatsCubit>(
       () => ReverseSeatsCubit(reverseSeatsUsecase: sl()));
+  sl.registerFactory<TickethistoryCubit>(
+      () => TickethistoryCubit(getMyTicketsUsecase: sl()));
 
   //-- Use Cases
   sl.registerLazySingleton<GetCitiesUsecase>(() => GetCitiesUsecase(sl()));
@@ -132,6 +139,8 @@ Future<void> init() async {
       () => ReverseSeatsUsecase(paymentRepository: sl()));
   sl.registerLazySingleton<GetSavedLangUseCase>(
       () => GetSavedLangUseCase(langRepository: sl()));
+  sl.registerLazySingleton<GetMyTicketsUsecase>(
+      () => GetMyTicketsUsecase(ticketRepository: sl()));
 
   //-- Repositories
   sl.registerLazySingleton<HomeRepository>(
@@ -154,6 +163,8 @@ Future<void> init() async {
       firebaseRemoteDataSource: sl(), networkInfo: sl()));
   sl.registerLazySingleton<LangRepository>(
       () => LangRepositoryImpl(langLocalDataSource: sl()));
+  sl.registerLazySingleton<TicketRepository>(() =>
+      TicketRepositoryImp(getTicketsRemoteDataSource: sl(), networkInfo: sl()));
 
   //-- Data Sources
   sl.registerLazySingleton<HomeRemoteDataSource>(
@@ -176,6 +187,8 @@ Future<void> init() async {
       () => FirebaseRemoteDataSourceImpl(auth: sl(), firestore: sl()));
   sl.registerLazySingleton<ReverseSeatsRemoteDataSource>(
       () => ReverseSeatsRemoteDataSourceDIO());
+  sl.registerLazySingleton<GetTicketsRemoteDataSource>(
+      () => GetTicketsRemoteDataSourceDIO());
   sl.registerLazySingleton<LangLocalDataSource>(
       () => LangLocalDataSourceImpl(sharedPreferences: sl()));
 

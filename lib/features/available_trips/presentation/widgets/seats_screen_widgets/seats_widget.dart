@@ -468,21 +468,6 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                                         style: StyleConst.title2,
                                       ),
                                     );
-                                  } else if (state is UserDataInitial) {
-                                    AuthState mstate =
-                                        BlocProvider.of<AuthCubit>(context)
-                                            .state;
-                                    if (mstate is Authenticated) {
-                                      if (mstate.isSignIn == true) {
-                                        BlocProvider.of<UserDataCubit>(context)
-                                            .getCurrentUser(context: context);
-                                        return const CircularProgressIndicator();
-                                      } else {
-                                        return const loginWidget();
-                                      }
-                                    } else {
-                                      return const loginWidget();
-                                    }
                                   } else {
                                     return const loginWidget();
                                   }

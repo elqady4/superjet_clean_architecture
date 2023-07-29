@@ -10,6 +10,7 @@ import 'package:suberjet_clean_architecture/core/widgets/page_back_widget.dart';
 import 'package:suberjet_clean_architecture/features/auth/domain/entities/user_entity.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_cubit/user_cubit.dart';
+import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 
 import '../../../../core/utils/app_strings.dart';
 
@@ -48,6 +49,8 @@ class LoginScreen extends StatelessWidget {
               listener: (context, state) {
                 if (state is UserSuccess) {
                   BlocProvider.of<AuthCubit>(context).loggedIn(context);
+                  BlocProvider.of<UserDataCubit>(context)
+                      .getCurrentUser(context: context);
                   Navigator.pop(context);
                 } else if (state is UserFailure) {
                   CustomSnackBar.show(

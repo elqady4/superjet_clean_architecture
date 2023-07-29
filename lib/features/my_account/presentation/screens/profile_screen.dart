@@ -4,6 +4,7 @@ import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
+import 'package:suberjet_clean_architecture/features/ticket_history/presentation/cubit/tickethistory_cubit.dart';
 
 import '../../../../core/widgets/header_widget.dart';
 import '../widgets/profile_nav_widget.dart';
@@ -68,6 +69,8 @@ class MyAccountScreen extends StatelessWidget {
                                 .loggedOut(context);
                             BlocProvider.of<UserDataCubit>(context)
                                 .removeUserDataWithLogout();
+                            BlocProvider.of<TickethistoryCubit>(context)
+                                .emitInitial();
                           },
                         );
                       } else {
@@ -107,8 +110,6 @@ class SinginOrMyProfile extends StatelessWidget {
                 if (state.isSignIn == false) {
                   Navigator.pushNamed(context, Routes.loginRoute);
                 } else {
-                  BlocProvider.of<UserDataCubit>(context)
-                      .getCurrentUser(context: context);
                   Navigator.pushNamed(context, Routes.personalInformationRoute);
                 }
               });

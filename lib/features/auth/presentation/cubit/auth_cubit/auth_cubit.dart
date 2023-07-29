@@ -22,6 +22,8 @@ class AuthCubit extends Cubit<AuthState> {
     required this.getCurrentUserIdUsecase,
   }) : super(AuthInitial());
 
+  get isSignIn => null;
+
   Future<void> appStarted(BuildContext context) async {
     emit(AuthLoading());
     Either<Failure, bool> result = await isSignInUsecase(unit);
