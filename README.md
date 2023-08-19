@@ -7,11 +7,11 @@ The project is written using the Clean Architecture pattern, which divides the c
 ## Screen Shots
   HomePage                 |   Trips Page        |  Seats Page
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460787.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460658.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460806.png?raw=true)
+![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460541.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460658.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460806.png?raw=true)
 
   Settings Page                 |   Payment Page        |  Tickets Page
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460541.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460693.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460763.png?raw=true)
+![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460787.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460693.png?raw=true)|![](https://github.com/elqady4/suberjet_clean_architecture/blob/main/screen%20shots/Screenshot_1692460763.png?raw=true)
 
 
 ## Packages
