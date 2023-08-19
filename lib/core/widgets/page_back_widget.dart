@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../style/style_constant.dart';
 
@@ -28,7 +29,7 @@ class PageBackHeaderWidget extends StatelessWidget {
               ),
               Image.asset(
                 'assets/home/SA.png',
-                width: 150,
+                width: 35.w,
               ),
             ],
           ),

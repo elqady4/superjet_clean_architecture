@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations_setup.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/features/splash/presentation/cubit/locale_cubit.dart';
@@ -54,22 +55,28 @@ class _SuperJetAppState extends State<SuperJetApp> {
         return previousState != currentState;
       },
       builder: (context, state) {
-        return MaterialApp(
-          onGenerateRoute: AppRoutes.onGenerateRoute,
-          locale: state.locale,
-          supportedLocales: AppLocalizationsSetup.supportedLocales,
-          localeResolutionCallback:
-              AppLocalizationsSetup.localeResolutionCallback,
-          localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
-          debugShowCheckedModeBanner: false,
-          theme: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: Colors.indigo,
-            ),
-          ),
-          home: SafeArea(
-            child: isSplashAppear ? const SplashScreen() : _buildTabsScreen(),
-          ),
+        return Sizer(
+          builder: (context, orientation, deviceType) {
+            return MaterialApp(
+              onGenerateRoute: AppRoutes.onGenerateRoute,
+              locale: state.locale,
+              supportedLocales: AppLocalizationsSetup.supportedLocales,
+              localeResolutionCallback:
+                  AppLocalizationsSetup.localeResolutionCallback,
+              localizationsDelegates:
+                  AppLocalizationsSetup.localizationsDelegates,
+              debugShowCheckedModeBanner: false,
+              theme: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.fromSwatch(
+                  primarySwatch: Colors.indigo,
+                ),
+              ),
+              home: SafeArea(
+                child:
+                    isSplashAppear ? const SplashScreen() : _buildTabsScreen(),
+              ),
+            );
+          },
         );
       },
     );
@@ -80,7 +87,7 @@ class _SuperJetAppState extends State<SuperJetApp> {
       body: selectPage(_selectedIndex),
       bottomNavigationBar: MoltenBottomNavigationBar(
         selectedIndex: _selectedIndex,
-        domeHeight: 25,
+        domeHeight: 3.h,
         onTabChange: (clickedIndex) {
           setState(() {
             _selectedIndex = clickedIndex;

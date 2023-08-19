@@ -13,7 +13,16 @@ class TicketCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.backColor,
+        boxShadow: [
+          BoxShadow(
+              blurStyle: BlurStyle.outer,
+              blurRadius: 2,
+              color: AppColors.barColor),
+        ],
+        gradient: LinearGradient(colors: [
+          AppColors.barColor.withOpacity(0.1),
+          AppColors.barColor.withOpacity(0.2)
+        ], begin: Alignment.topCenter, end: AlignmentDirectional.bottomCenter),
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: AppColors.primaryColor,

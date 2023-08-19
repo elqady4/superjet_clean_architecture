@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 
 import '../../../../core/style/style_constant.dart';
@@ -9,13 +10,15 @@ class ProfileNavWidget extends StatelessWidget {
       required this.icon,
       required this.title,
       this.onTap,
-      this.iconNavigat})
+      this.iconNavigat,
+      this.color})
       : super(key: key);
 
   final IconData icon;
   final String title;
   final void Function()? onTap;
   final IconData? iconNavigat;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,10 @@ class ProfileNavWidget extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: AppColors.backColor,
+            color:
+                color != null ? color!.withOpacity(0.6) : AppColors.backColor,
           ),
-          height: 65,
+          height: 9.h,
           child: Row(
             children: [
               const SizedBox(

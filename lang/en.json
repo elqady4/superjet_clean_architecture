@@ -54,7 +54,7 @@
   "notAvailable": "Not Available",
   "available": "Available",
   "ok": "Ok",
-  "getNow": "Get it Now",
+  "getNow": "Book Now",
   "takeSeat": "Take Seat",
   "seatsWillReserved": "Seats Will Reserved",
   "total": "Total",
@@ -84,5 +84,7 @@
   "time": "Time",
   "fail_tickets": "Fail While Get Your Tickets",
   "payMethod": "Pay With",
-  "amount": "Payed"
+  "amount": "Payed Money",
+  "payCard": "Pay With Card",
+  "payWallet": "Pay With Wallet"
 }

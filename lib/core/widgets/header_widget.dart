@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import '../utils/app_assets_strings.dart';
 
 import '../style/style_constant.dart';
@@ -20,7 +21,7 @@ class HeaderWidget extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 10),
-                height: 50,
+                height: 5.h,
                 child: Text(
                   title,
                   style: StyleConst.title2,
@@ -28,7 +29,7 @@ class HeaderWidget extends StatelessWidget {
               ),
               Image.asset(
                 AppAssetsStrings.logo,
-                width: 150,
+                width: 35.w,
               ),
             ],
           ),

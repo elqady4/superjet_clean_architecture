@@ -97,6 +97,7 @@ class RegisterScreen extends StatelessWidget {
                             height: 8,
                           ),
                           TextFormField(
+                              obscureText: true,
                               validator: validate,
                               controller: passwordController,
                               decoration: InputDecoration(
@@ -111,6 +112,7 @@ class RegisterScreen extends StatelessWidget {
                             height: 8,
                           ),
                           TextFormField(
+                              obscureText: true,
                               validator: validate,
                               controller: repasswordController,
                               decoration: InputDecoration(

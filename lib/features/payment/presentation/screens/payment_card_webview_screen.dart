@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:suberjet_clean_architecture/api/payment_endpoints.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
-import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/screens/payment_resultl_screen.dart';
 

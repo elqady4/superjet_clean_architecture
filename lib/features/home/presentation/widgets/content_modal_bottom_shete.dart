@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 
 import '../../../../core/style/app_colors.dart';
@@ -26,20 +27,20 @@ class ModalSheteContentWidget extends StatelessWidget {
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
-          height: 400,
+          height: 50.h,
           padding:
               const EdgeInsetsDirectional.symmetric(vertical: 5, horizontal: 5),
           child: Column(
             children: [
               Container(
-                width: 100,
-                height: 8,
+                width: 20.w,
+                height: 1.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     color: AppColors.primaryColor),
               ),
-              const SizedBox(
-                height: 15,
+              SizedBox(
+                height: 2.h,
               ),
               TextField(
                 decoration: InputDecoration(

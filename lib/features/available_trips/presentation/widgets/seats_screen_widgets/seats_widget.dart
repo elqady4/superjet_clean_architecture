@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sizer/sizer.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
 import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
@@ -35,8 +36,8 @@ class _SeatsWidgetState extends State<SeatsWidget> {
       body: Column(
         children: [
           Container(
-            height: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            height: 5.h,
+            padding: EdgeInsets.symmetric(horizontal: 2.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -98,14 +99,14 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                         children: [
                           SvgPicture.asset(
                             'assets/seats/steeringwheel.svg',
-                            width: 70,
+                            width: 15.w,
                           ),
                           const Spacer(
                             flex: 1,
                           ),
                           SvgPicture.asset(
                             'assets/seats/door-exit.svg',
-                            width: 70,
+                            width: 15.w,
                           )
                         ],
                       ),
@@ -358,8 +359,8 @@ class _SeatsWidgetState extends State<SeatsWidget> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: Container(
-              height: 100,
-              padding: const EdgeInsets.all(8),
+              height: 8.h,
+              padding: EdgeInsets.all(1.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -368,11 +369,11 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                     children: [
                       Text(
                         '${widget.ticketPrice} ${AppLocalizations.of(context)!.translate('egPound')!}',
-                        style: StyleConst.title3,
+                        style: StyleConst.title4,
                       ),
                       Text(
                         AppLocalizations.of(context)!.translate('everyticket')!,
-                        style: StyleConst.title3,
+                        style: StyleConst.title4,
                       ),
                     ],
                   ),
@@ -384,11 +385,11 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                     children: [
                       Text(
                         onClickSelectedSeats.length.toString(),
-                        style: StyleConst.title3,
+                        style: StyleConst.title4,
                       ),
                       Text(
                         AppLocalizations.of(context)!.translate('ticket')!,
-                        style: StyleConst.title3,
+                        style: StyleConst.title4,
                       ),
                     ],
                   ),
@@ -404,7 +405,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                       ),
                       Text(
                         AppLocalizations.of(context)!.translate('total')!,
-                        style: StyleConst.title3.copyWith(color: AppColors.red),
+                        style: StyleConst.title4.copyWith(color: AppColors.red),
                       ),
                     ],
                   ),
@@ -426,11 +427,11 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                             title: Text(
                               AppLocalizations.of(context)!
                                   .translate('seatsWillReserved')!,
-                              style: StyleConst.title2,
+                              style: StyleConst.title1,
                             ),
                             content: Text(
                               onClickSelectedSeats.join(' - '),
-                              style: StyleConst.title3
+                              style: StyleConst.title2
                                   .copyWith(color: Colors.blueGrey),
                             ),
                             actions: [
@@ -479,11 +480,11 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                       );
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         AppLocalizations.of(context)!.translate('getNow')!,
                         style:
-                            StyleConst.title2.copyWith(color: AppColors.white),
+                            StyleConst.title3.copyWith(color: AppColors.white),
                       ),
                     ),
                   ),
@@ -513,9 +514,9 @@ class _SeatsWidgetState extends State<SeatsWidget> {
             }
           : () {},
       child: Container(
-        width: 60.0,
-        height: 65.0,
-        margin: const EdgeInsets.symmetric(horizontal: 5),
+        width: 18.w,
+        height: 7.h,
+        margin: EdgeInsets.symmetric(horizontal: 1.w),
         decoration: enable
             ? BoxDecoration(
                 color: selectedSeats[seatNumber - 1]
@@ -546,7 +547,7 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                   style: TextStyle(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 14),
+                      fontSize: 12.sp),
                 ),
               ),
             ),

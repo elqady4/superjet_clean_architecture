@@ -8,7 +8,7 @@
   "availableTrips": "الرحلات المتاحه",
   "ReverseNow": "احجز الان",
   "arriveTime": "وصول",
-  "registerNow": "التسحيل الان",
+  "registerNow": "التسجيل الان",
   "login": "الدخول",
   "logOut": "تسجيل خروج",
   "myAccount": "حسابي",
@@ -54,7 +54,7 @@
   "notAvailable": "غير متاح",
   "available": "متاح",
   "ok": "حسنا",
-  "getNow": "احصل عليه الان",
+  "getNow": "احجز الان",
   "takeSeat": "حجز مقعد",
   "seatsWillReserved": "سيتم حجز المقاعد",
   "total": "الاجمالي",
@@ -81,5 +81,7 @@
   "time": "الوقت",
   "fail_tickets": "فشل الوصول الي التذاكر الخاصة بك",
   "payMethod": "طريقة الدفع",
-  "amount": "المبلغ المدفوع"
+  "amount": "المبلغ المدفوع",
+  "payCard": "الدفع بالبطاقة الائتمانيه",
+  "payWallet": "الدفع بالمحفظة الالكترونيه"
 }

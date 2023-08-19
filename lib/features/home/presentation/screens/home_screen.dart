@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:sizer/sizer.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/core/widgets/header_widget.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 
@@ -29,27 +31,14 @@ class HomeScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  AppAssetsStrings.qrCode,
-                  height: 50,
-                ),
-                Image.asset(
-                  AppAssetsStrings.logo,
-                  width: 150,
-                ),
-              ],
-            ),
+          HeaderWidget(
+            title: AppLocalizations.of(context)!.translate('mainPage')!,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(5.w),
                 child: Text(
                   AppLocalizations.of(context)!.translate('whereToTravel')!,
                   style: StyleConst.title1,
@@ -57,7 +46,7 @@ class HomeScreen extends StatelessWidget {
               ),
               Image.asset(
                 AppAssetsStrings.bus,
-                width: 130,
+                width: 35.w,
               ),
             ],
           ),

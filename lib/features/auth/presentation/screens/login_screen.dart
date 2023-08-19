@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 if (state is Authenticated) {
                   CustomSnackBar.show(
                     context: context,
-                    message: 'Hello //${state.userId}',
+                    message: 'Login Success',
                     backgroundColor: AppColors.green,
                     duration: const Duration(seconds: 3),
                   );
@@ -91,6 +91,7 @@ class LoginScreen extends StatelessWidget {
                               height: 8,
                             ),
                             TextFormField(
+                                obscureText: true,
                                 validator: validate,
                                 controller: passwordController,
                                 decoration: InputDecoration(

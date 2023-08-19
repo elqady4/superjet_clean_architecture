@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:suberjet_clean_architecture/features/auth/presentation/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:suberjet_clean_architecture/features/ticket_history/presentation/cubit/tickethistory_cubit.dart';
@@ -61,6 +62,7 @@ class MyAccountScreen extends StatelessWidget {
                     if (state is Authenticated) {
                       if (state.isSignIn == true) {
                         return ProfileNavWidget(
+                          color: AppColors.red,
                           title: AppLocalizations.of(context)!
                               .translate('logOut')!,
                           icon: Icons.logout,

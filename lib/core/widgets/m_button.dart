@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../style/style_constant.dart';
 
@@ -17,7 +18,7 @@ class MButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
-          height: 45,
+          height: 5.h,
           width: double.infinity,
           decoration: BoxDecoration(
               color: Colors.indigo, borderRadius: BorderRadius.circular(16)),

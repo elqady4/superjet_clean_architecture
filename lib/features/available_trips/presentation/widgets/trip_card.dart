@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 
 import '../../../../core/style/style_constant.dart';
@@ -19,8 +20,8 @@ class TripCard extends StatelessWidget {
         elevation: 10,
         shadowColor: Colors.black,
         child: Container(
-          height: 220,
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+          height: 30.h,
+          padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.2.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -63,7 +64,7 @@ class TripCard extends StatelessWidget {
                         width: 5,
                       ),
                       SizedBox(
-                        width: 150,
+                        width: 40.w,
                         child: Text(
                           tripEntity.company,
                           style: StyleConst.title4,

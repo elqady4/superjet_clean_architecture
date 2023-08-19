@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suberjet_clean_architecture/config/locale/app_localizations.dart';
 import 'package:suberjet_clean_architecture/config/routes/routes.dart';
+import 'package:suberjet_clean_architecture/core/style/app_colors.dart';
+import 'package:suberjet_clean_architecture/core/style/style_constant.dart';
 import 'package:suberjet_clean_architecture/core/widgets/center_msg.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/card_payment_cubit/cubit/card_payment_cubit.dart';
 import 'package:suberjet_clean_architecture/features/payment/presentation/cubites/payment_method_cubit/payment_method_cubit.dart';
@@ -14,7 +16,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment Methods'),
+        title: Text(AppLocalizations.of(context)!.translate('paymetTitle')!),
         centerTitle: true,
       ),
       body: _buildBody(context),
@@ -36,73 +38,47 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
           );
         } else if (state is PaymentMethodLoaded) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, Routes.paymentCardWebviewRoute);
-                  BlocProvider.of<CardPaymentCubit>(context)
-                      .getPaymentKeyCard(state.paymentInfoEntity, context);
-                },
+              Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color.fromARGB(255, 220, 218, 218)),
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/visa_master.png',
-                        width: 200,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Pay With Card',
-                        style: TextStyle(fontSize: 28),
-                      )
-                    ],
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate('paymetTitle')!,
+                      style: StyleConst.title2,
+                    ),
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, Routes.paymentWalletWebviewRoute);
-                  BlocProvider.of<WalletPaymentCubit>(context)
-                      .getPaymentKeyWallet(state.paymentInfoEntity, context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color.fromARGB(255, 220, 218, 218)),
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/voda_cash.png',
-                        width: 200,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Pay With VodaFone Cash',
-                        style: TextStyle(fontSize: 28),
-                      )
-                    ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                        context, Routes.paymentCardWebviewRoute);
+                    BlocProvider.of<CardPaymentCubit>(context)
+                        .getPaymentKeyCard(state.paymentInfoEntity, context);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.translate('payCard')!,
+                    style: StyleConst.title3.copyWith(color: AppColors.white),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                        context, Routes.paymentWalletWebviewRoute);
+                    BlocProvider.of<WalletPaymentCubit>(context)
+                        .getPaymentKeyWallet(state.paymentInfoEntity, context);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.translate('payWallet')!,
+                    style: StyleConst.title3.copyWith(color: AppColors.white),
+                  ),
+                ),
               ),
             ],
           );
